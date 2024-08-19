@@ -1,0 +1,41 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using RememberText.Domain.Entities.Identity
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+<ul class="navbar-nav justify-content-center">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        var isAdmin = User.IsInRole(RememberText.Domain.Entities.Identity.User.RTGenAdministrator);
+        var currUser = await UserManager.GetUserAsync(User);
+        string userId = UserManager.GetUserId(User);
+
+        <li class="nav-item">
+                @*@if (isAdmin)
+                {
+                    <a class="nav-link text-success" asp-area="Identity" asp-page="/Account/Manage/PersonalData" title="Manage">
+                       Hello @currUser.Nickname!
+                    </a>
+                }
+                else
+                {
+                    <a class="nav-link text-success"
+                       asp-area="Identity" asp-page="/Account/Manage/PersonalData" title="Manage">
+                        Hello @currUser.Nickname!
+                    </a>
+                }*@
+            <a asp-action="Index" asp-controller="Projects" class="nav-link text-success"><i class="far fa-list-alt"></i>&nbsp;Hello @currUser.Nickname!</a>
+            </li>
+            <li class="nav-item">
+                <form id="logoutForm" class="navbar-right" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button type="submit" class="btn btn-link text-dark" title="Logg Off" data-toggle="tooltip">
+                        <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+                    </button>
+                </form>
+            </li>
+    }
+    else
+    {
+        <partial name="Partial/_RegisterLogin" />
+    }
+</ul>

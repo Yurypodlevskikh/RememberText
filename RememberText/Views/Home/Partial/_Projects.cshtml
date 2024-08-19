@@ -1,0 +1,200 @@
+﻿@model List<RememberText.Domain.Entities.IpAddress>
+
+<div class="row">
+    <div class="col-md-12">
+        <h4><i class="far fa-list-alt"></i> Projects</h4>
+
+        <div class="" style="overflow: auto">
+            <table id="projectslist" class="table table-sm table-bordered table-striped table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th class="text-center align-middle"><text>№</text></th>
+                        <th class="text-center align-middle">
+                            <a href="#" class="a-sortparam">Ip&nbsp;<i class="fas fa-sort"></i></a>
+                        </th>
+                        <th class="text-center">
+                            <a href="#" class="a-sortparam">Continent Code&nbsp;<i class="fas fa-sort"></i></a>
+                        </th>
+                        <th class="text-center">
+                            <a href="#" class="a-sortparam">Continent Name&nbsp;<i class="fas fa-sort"></i></a>
+                        </th>
+                        <th class="text-center">
+                            <a href="#" class="a-sortparam">Country Code&nbsp;<i class="fas fa-sort"></i></a>
+                        </th>
+                        <th class="text-center">
+                            <a href="#" class="a-sortparam">Country Name&nbsp;<i class="fas fa-sort"></i></a>
+                        </th>
+                        <th class="text-center">
+                            <a href="#" class="a-sortparam">Region Code</a>
+                        </th>
+                        <th class="text-center align-middle">
+                            Region Name
+                        </th>
+                        <th class="text-center align-middle">
+                            City
+                        </th>
+                        <th class="text-center align-middle">
+                            Zip
+                        </th>
+                    </tr>
+                </thead>
+                @{
+                    int i = 1;
+                    foreach (var item in Model)
+                    {
+                                <tr id="@("text_" + item.Ip)">
+                                    <td class="text-center align-middle">
+                                        <strong>@i<text>.</text></strong>
+                                    </td>
+                                    <td class=" align-middle">
+                                        @item.Ip
+                                    </td>
+                                    <td class="text-center align-middle">
+                                        @item.ContinentCode
+                                    </td>
+                                    <td class="text-center align-middle">
+                                        @item.ContinentName
+                                    </td>
+                                    <td class="text-center align-middle">
+                                        @item.CountryCode
+                                    </td>
+                                    <td class="text-center align-middle">
+                                        @item.CountryName
+                                    </td>
+                                    <td class="text-center align-middle">
+                                        @item.RegionCode
+                                    </td>
+                                    <td class="text-center align-middle">
+                                        @item.RegionName
+                                    </td>
+                                    <td class="text-center align-middle">
+                                        @item.City
+                                    </td>
+                                    <td class="text-center align-middle">
+                                        @item.Zip
+                                    </td>
+                                </tr>
+                        i++;
+                    }
+                }
+            </table>
+        </div>
+    </div>
+</div>
+
+@*@model LearnText.Models.DisplayProjectViewModel*@
+
+@*<div class="row">
+    <div class="col-md-12">
+        <h4>
+            <i class="fa fa-list-alt" aria-hidden="true"></i> Published Projects
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                if (!String.IsNullOrEmpty(Model.SortLang))
+                {
+                    <small>(<a href="@Url.Action("Index", "Home", new { sortLang = Model.SortLang })">All Languages</a>)</small>
+                }
+                else
+                {
+                    <small>(<a href="@Url.Action("Index", "Home")">Preffered Languages</a>)</small>
+                }
+            }
+        </h4>
+
+        <div class="" style="overflow: auto">
+            <table id="projectslist" class="table table-sm table-bordered table-striped table-hover table-responsive">
+                <thead class="thead-light">
+                    <tr>
+                        <th class="text-center"><text>№</text></th>
+                        <th class="text-center">
+                            <a href="@Url.Action("Index", "Home", new { sortOrder = Model.TitleSortParam, sortLang = String.IsNullOrEmpty(Model.SortLang) ? "allang" : "" })" class="a-sortparam">Preview <i class="fa fa-sort" aria-hidden="true"></i></a>
+                        </th>
+                        <th class="text-center">
+                            &nbsp;
+                        </th>
+                        <th class="text-center">
+                            <a href="@Url.Action("Index", "Home", new { sortOrder = Model.FromLangSortParam, sortLang = String.IsNullOrEmpty(Model.SortLang) ? "allang" : "" })" class="a-sortparam">Main to Secondary <i class="fa fa-sort" aria-hidden="true"></i></a>
+                        </th>
+                        <th class="text-center">
+                            <a href="@Url.Action("Index", "Home", new { sortOrder = Model.ToLangSortParam, sortLang = String.IsNullOrEmpty(Model.SortLang) ? "allang" : "" })" class="a-sortparam">Secondary to Main <i class="fa fa-sort" aria-hidden="true"></i></a>
+                        </th>
+                        <th class="text-center">
+                            <a href="@Url.Action("Index", "Home", new { sortOrder = Model.NicknameSortParam, sortLang = String.IsNullOrEmpty(Model.SortLang) ? "allang" : "" })" class="a-sortparam">Name <i class="fa fa-sort" aria-hidden="true"></i></a>
+                        </th>
+                        <th class="text-center">
+                            <a href="@Url.Action("Index", "Home", new { sortOrder = Model.CreatedSortParam, sortLang = String.IsNullOrEmpty(Model.SortLang) ? "allang" : "" })" class="a-sortparam">Created <i class="fa fa-sort" aria-hidden="true"></i></a>
+                        </th>
+                    </tr>
+                </thead>
+                @{
+                    int i = 1;
+                    foreach (var item in Model.AllProjects)
+                    {
+                        <tr id="@("text_" + item.TopicId)">
+                            <td class="text-center align-middle">
+                                <strong>@i<text>.</text></strong>
+                            </td>
+                            <td class="align-middle">
+                                @using (Html.BeginForm("DetailsText", "Home", FormMethod.Post, new { @class = "detailstextform" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.Hidden("Id", item.TopicId, new { @id = "details_" + item.TopicId })
+                                    <input id="@("doublereturnurl_" + item.TopicId)" name="DoubleReturnUrl" type="hidden" value="@ViewBag.PreviousUrl" />
+                                    <button type="submit" class="btn btn-outline-dark btn-sm detailstextbtn" title="То Read" data-toggle="tooltip">
+                                        <i class="fa fa-book" aria-hidden="true"></i> <span class="project-title">@item.TopicTitle</span>
+                                    </button>
+                                }
+                            </td>
+                            <td class="text-center align-middle">
+                                @using (Html.BeginForm("LikeProject", "Profile", FormMethod.Post, new { @class = "likeform" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.Hidden("Id", item.TopicId, new { @id = "likes_" + item.TopicId })
+
+                                    <button type="submit" class="btn btn-sm @(item.TopicLike > 0 ? "btn-outline-success" : "btn-outline-primary")">
+                                        <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                                    </button>
+                                    <span class="small project-likes">
+                                        @if (item.TopicLike > 0)
+                                        {
+                                            @item.TopicLike
+                                        }
+                                        else
+                                        {
+                                            @String.Empty;
+                                        }
+                                    </span>
+                                }
+                            </td>
+                            <td class="text-center">
+                                <a href="@Url.Action("Practise", "Home", new { id = item.TopicId })" class="btn btn-outline-dark btn-sm" title="Practise" data-toggle="tooltip" data-placement="right">
+                                    @Html.Raw(String.IsNullOrEmpty(item.Secondary) ? item.Primary : item.Primary + " <i class='fa fa-arrow-right' aria-hidden='true'></i> " + item.Secondary)
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                @if (!String.IsNullOrEmpty(item.Secondary))
+                                {
+                                    <a href="@Url.Action("Practise", "Home", new { id = item.TopicId, v = "v" })" class="btn btn-outline-dark btn-sm" title="Practise" data-toggle="tooltip" data-placement="right">
+                                        @Html.Raw(String.IsNullOrEmpty(item.Secondary) ? "" : item.Secondary + " <i class='fa fa-arrow-right' aria-hidden='true'></i> " + item.Primary)
+                                    </a>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-default btn-sm" disabled></button>
+                                }
+                            </td>
+                            <td class="text-center align-middle">
+                                <span title="" data-toggle="tooltip">@Html.DisplayFor(modelItem => item.UserNickname)</span>
+                            </td>
+                            <td class="text-center align-middle">
+                                <span title="@item.CreateDateTime.ToString("T")" data-toggle="tooltip">@item.CreateDateTime.ToString("dd MMM. yyyy")</span>
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                }
+            </table>
+        </div>
+    </div>
+</div>*@

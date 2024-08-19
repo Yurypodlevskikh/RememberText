@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <partial name="Partial/_MetaTags" />
+
+    <partial name="Partial/_Styles" />
+
+    @await RenderSectionAsync("head", required: false) 
+</head>
+<body>
+    <a id="RT_Brand" href="@Url.Action("Index", "Home")" class="navbar-brand">
+        <span id="Logo_box" class="custom-success">
+            <span id="logo-letter" class="rt-logo-letter">R</span>
+        </span>
+    </a>
+
+    <nav id="RT_Nav" class="navbar fixed-top navbar-expand-sm navbar-light">
+        <div class="container">
+            <div></div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="RT_navbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div id="RT_navbar" class="collapse navbar-collapse">
+                <partial name="Partial/_Navbar" />
+                <partial name="Partial/_LoginPartial" />
+            </div>
+        </div>
+
+        <div id="Green_Line" class="line-success"></div>
+    </nav>
+
+    <div id="container-content" class="container">
+
+        @{
+            string alertClass = TempData["WrongResponse"] != null ? "alert alert-danger alert-response" : TempData["SuccessResponse"] != null ? "alert alert-success alert-response" : "";
+            string alertText = TempData["WrongResponse"] != null ? TempData["WrongResponse"].ToString() : TempData["SuccessResponse"] != null ? TempData["SuccessResponse"].ToString() : "";
+        }
+
+        <div class="alert-box">
+            <div>
+                <div class="text-center @alertClass">@alertText</div>
+            </div>
+        </div>
+
+        @*Her should will be additional code from old version*@
+
+        @RenderBody()
+
+        <partial name="Partial/_Footer" />
+
+    </div>
+
+    <partial name="Partial/_MainScripts" />
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

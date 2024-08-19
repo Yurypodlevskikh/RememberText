@@ -1,0 +1,14 @@
+﻿@page
+@model ChangePrefLangModel
+@{
+    ViewData["Title"] = "Change Preferred Languages";
+    ViewData["ActivePage"] = ManageNavPages.ChangePrefLang;
+}
+
+<h4>@ViewData["Title"]</h4>
+
+<p>
+    You will only see the texts written in the languaches you select.
+</p>
+
+<vc:all-available-lang selected-lang="@Model.Input.PrefLang"></vc:all-available-lang>

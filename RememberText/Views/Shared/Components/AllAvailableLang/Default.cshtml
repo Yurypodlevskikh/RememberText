@@ -1,0 +1,96 @@
+﻿@model List<RememberText.ViewModels.AllAvailableLangViewModel>
+
+@if (Model != null)
+{
+    int order = 0;
+    string selectedLang = "";
+    string startListGroup = @"<ul class=""list-group list-group-flush"">";
+    string endListGroup = @"</ul>";
+    string startCard = $@"<div class=""col mb-4"">
+        <div class=""card overflow-auto"" style=""max-height: 150px;"">";
+    string endCard = @"</div></div>";
+
+<form method="post">
+    <hr />
+    <p>
+        <button type="submit" class="btn btn-success">Submit</button>
+        <a asp-page="PersonalData" class="btn btn-warning"><i class="fas fa-ban"></i>&nbsp;Cancel</a>
+    </p>
+
+    <div class="row row-cols-1 row-cols-md-3">
+        @for (int i = 0; i < Model.Count(); i++)
+        {
+            string selectedChckBx = "";
+            if (Model[i].Selected)
+            {
+                selectedLang = "border-success";
+                selectedChckBx = "checked";
+            }
+
+            int y = 1 + i;
+            int nextOrder = y < Model.Count() ? Model[y].Order : 0;
+            if (order != Model[i].Order)
+            {
+                @Html.Raw(startCard)
+                <div class="card-header @selectedLang">
+                    <div class="custom-control custom-checkbox custom-control-inline">
+                        <input type="checkbox" name="PrefLang" class="custom-control-input" id="PrefLang_@Model[i].Id" value="@Model[i].Id" @selectedChckBx />
+                        <label class="custom-control-label" for="PrefLang_@Model[i].Id">@Model[i].LangName</label>
+                    </div>
+                </div>
+                @Html.Raw(startListGroup)
+
+                order = Model[i].Order;
+
+                if (nextOrder == 0)
+                {
+                    @Html.Raw(endListGroup)
+                    @Html.Raw(endCard)
+                }
+                else
+                {
+                    if (nextOrder != order)
+                    {
+                        @Html.Raw(endCard)
+                    }
+                }
+            }
+            else
+            {
+                if (nextOrder > 0)
+                {
+                    if (nextOrder != order)
+                    {
+                        <li class="list-group-item">
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                <input type="checkbox" name="PrefLang" class="custom-control-input" id="PrefLang_@Model[i].Id" value="@Model[i].Id" @selectedChckBx />
+                                <label class="custom-control-label" for="PrefLang_@Model[i].Id">@Model[i].LangName</label>
+                            </div>
+                        </li>
+                        @Html.Raw(endListGroup)
+                        @Html.Raw(endCard)
+                    }
+                    else
+                    {
+                        <li class="list-group-item">
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                <input type="checkbox" name="PrefLang" class="custom-control-input" id="PrefLang_@Model[i].Id" value="@Model[i].Id" @selectedChckBx />
+                                <label class="custom-control-label" for="PrefLang_@Model[i].Id">@Model[i].LangName</label>
+                            </div>
+                        </li>
+                    }
+                }
+                else
+                {
+                    @Html.Raw(endListGroup)
+                    @Html.Raw(endCard)
+                }
+            }
+        }
+    </div>
+
+    <button type="submit" class="btn btn-success">Submit</button>
+    <a asp-page="PersonalData" class="btn btn-warning"><i class="fas fa-ban"></i>&nbsp;Cancel</a>
+</form>
+    
+}

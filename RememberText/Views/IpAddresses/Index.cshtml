@@ -1,0 +1,80 @@
+﻿@model IEnumerable<RememberText.ViewModels.IpAddressesViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<p>
+    <a asp-action="Create">Create New IpAddress</a>
+</p>
+
+<div id="ProjectsBox">
+
+    <div class="row">
+        <div class="col-md-12">
+            <h4><i class="far fa-list-alt"></i>&nbsp;Ip Addresses</h4>
+        </div>
+    </div>
+
+    <div style="overflow: auto">
+        <table id="projectslist" class="table table-sm table-bordered table-striped table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th class="text-center align-middle"><text>№</text></th>
+                    <th class="text-center align-middle">
+                        @Html.DisplayNameFor(model => model.Id)
+                    </th>
+                    <th class="text-center align-middle">
+                        <a href="#" class="a-sortparam">Ip&nbsp;<i class="fas fa-sort"></i></a>
+                    </th>
+                    <th class="text-center">
+                        <a href="#" class="a-sortparam">Country Name&nbsp;<i class="fas fa-sort"></i></a>
+                    </th>
+                    <th class="text-center align-middle">
+                        City
+                    </th>
+                    <th class="text-center align-middle">
+                        Created
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int i = 1;
+                    foreach (var item in Model)
+                    {
+                        <tr id="@("ip_" + item.Ip)">
+                            <td class="text-center align-middle">
+                                <strong>@i<text>.</text></strong>
+                            </td>
+                            <td class="text-center align-middle">
+                                @Html.DisplayFor(modelItem => item.Id)
+                            </td>
+                            <td class=" align-middle">
+                                @item.Ip
+                            </td>
+                            <td class="text-center align-middle">
+                                @item.CountryName
+                            </td>
+                            <td class="text-center align-middle">
+                                @item.City
+                            </td>
+                            <td class="text-center align-middle">
+                                @item.CreatedDateTime
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+</div>

@@ -1,0 +1,37 @@
+﻿@model RememberText.ViewModels.PreferredLangViewModel
+
+@if (Model != null && (Model.PrefLangs != null && Model.PrefLangs.Count() > 0))
+{
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    @if (string.IsNullOrEmpty(Model.SourceLang))
+                    {
+                        <h5>Choose Main Language</h5>
+                        <small>Creating Single Text</small>
+                    }
+                    else
+                    {
+                        <h5>Choose Target Language</h5>
+                        <p class="h5"><span class="badge badge-info">@Model.SourceLang</span> <i class="far fa-arrow-alt-circle-right"></i> ...</p>
+                        <small>Creating Paired Text</small>
+                    }
+                </div>
+                <ul id="choose_text_type" class="list-group">
+                    @foreach (var lang in Model.PrefLangs)
+                    {
+                        <li class="list-group-item">
+                            <a asp-action="CreateTopic"
+                               asp-controller="Projects"
+                               asp-route-langCode="@(string.IsNullOrEmpty(Model.SourceLang) ? lang.LangCode : Model.SourceLang + "_" + lang.LangCode)"
+                               class="create-project btn btn-success">
+                                @lang.LangName
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+}

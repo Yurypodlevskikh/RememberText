@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Create New Project";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="project_spinner">
+    <div class="spinner-border text-success" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+
+<div id="create_project_area" class="mt-1">
+    <partial name="_TypeOfProject" />
+</div>
+
+@section Scripts{
+    <script src="~/js/Project/CreateProjectSteps.js" asp-append-version="true"></script>
+}

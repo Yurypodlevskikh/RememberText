@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20200731144306_Initial.cs" />
+    <Compile Remove="Migrations\20200731144306_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200818121028_CreateIpDate.cs" />
+    <Compile Remove="Migrations\20200818121028_CreateIpDate.Designer.cs" />
+    <Compile Remove="Migrations\20210422091741_InitialTopicAndText.cs" />
+    <Compile Remove="Migrations\20210422091741_InitialTopicAndText.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RememberText.Domain\RememberText.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

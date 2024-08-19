@@ -1,0 +1,213 @@
+﻿body {
+    min-height: 2000px;
+    padding-top: 70px;
+}
+
+button::-moz-focus-inner {
+    border: 0 !important;
+}
+/*---- Navigation START ----*/
+.navbar {
+    background-color: #f8f9fa;
+}
+
+.navbar-collapse {
+    text-align: center;
+}
+
+.safari.keyboard .app-container {
+    bottom: 270px;
+}
+
+#RT_Brand {
+    overflow-y: visible;
+    width: 70px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1031;
+}
+
+#Logo_box {
+    background-image: url('../images/RememberTextWhite.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    height: 70px;
+    position: fixed;
+    top: 0;
+    width: 70px;
+    z-index: 2040;
+}
+
+.rt-logo-letter {
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    font-family: Calibri;
+    font-size: 2.8rem;
+    font-weight: normal;
+    height: 100%;
+}
+
+#Green_Line {
+    bottom: 0;
+    left: 0;
+    min-width: 100%;
+    position: absolute;
+}
+
+/*---- Navigation END ----*/
+/*---- Content START ----*/
+.show-origin-text {
+    padding: 9.5px;
+    margin: 0 0 10px;
+    /*font-size: 13px;
+  line-height: 1.42857143;*/
+    color: #333;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#projectslist {
+    min-width: 800px;
+}
+
+#ProjectsBox {
+    position: relative;
+}
+
+/*---- Content END ----*/
+#SpaceProgressBar .progress {
+    margin-top: 10px;
+}
+
+.text-in-modal p {
+    padding: 15px;
+}
+
+.progressdonations {
+    margin: 6px;
+}
+
+.inline-form {
+    display: inline;
+}
+
+.paypal-form .btn {
+    background-color: transparent;
+    font-size: inherit;
+    border: 1px solid #ff9933;
+    -moz-border-radius: 8px; /*Firefox*/
+    -webkit-border-radius: 8px; /*Safari, Chrome*/
+    border-radius: 8px;
+    padding: 0;
+    text-decoration: none;
+    overflow: hidden;
+}
+
+.paypal-btn-in-wrap {
+    background: -moz-linear-gradient(270deg, #ffab29 0%, #ffefd2 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, 270deg, color-stop(0%, #ffab29), color-stop(100%, #ffefd2)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(270deg, #ffab29 0%, #ffefd2 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(270deg, #ffab29 0%, #ffefd2 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(270deg, #ffab29 0%, #ffefd2 100%); /*  IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffab29', endColorstr='#ffefd2', GradientType='1'); /* for IE */
+    display: block;
+}
+
+.paypal-button-progress-out {
+    color: #003366;
+    font-weight: bold;
+    height: 100%;
+    position: relative;
+}
+
+.paypal-button-progress-in {
+    background-color: #18ff06;
+    /*-moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;*/
+    display: block;
+    height: 100%;
+    padding: 0 4px;
+    position: relative;
+    width: 0;
+}
+
+#CaptchaInputText {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+}
+
+.line-success {
+    border-bottom: 4px solid #28a745;
+}
+
+.line-warning {
+    border-bottom: 4px solid #f0ad4e;
+}
+
+.clearboth {
+    clear: both;
+}
+
+.alert-box {
+    overflow: hidden;
+}
+.alert-box > div {
+    -moz-animation: Fade-alert-out 3s ease 3s forwards;
+    -webkit-animation: Fade-alert-out 3s ease 3s forwards;
+    animation: Fade-alert-out 3s ease 3s forwards;
+}
+
+/*#errorresponse, #successresponse {
+    margin-bottom: 0;
+    width: 100%;
+}*/
+#project_spinner {
+    display: none;
+}
+
+#create-t-preload {
+    margin-bottom: 20px;
+}
+/*Navbar Menu without JavaScript*/
+#navbar-toggle-cbox {
+    display: none
+}
+
+    #navbar-toggle-cbox:checked ~ .collapse {
+        display: block;
+    }
+
+.navbar-nav > li > button {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    line-height: 20px;
+}
+
+@media (max-width: 767px) {
+    .navbar-nav .open .dropdown-menu > li > button {
+        padding: 5px 15px 5px 25px;
+    }
+}
+
+@media (min-width: 768px) {
+    .navbar-nav > li > button {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+}
+
+.lpiframeoverlay { /*Удаляет добавляемый iframe  в chrome при отключённом JavaScript*/
+    display: none;
+}

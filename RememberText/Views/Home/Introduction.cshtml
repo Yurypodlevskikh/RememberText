@@ -1,0 +1,89 @@
+﻿@model List<RememberText.Domain.Entities.IpAddress>
+
+@{
+    ViewData["Title"] = "Introduction";
+    Layout = "~/Views/Shared/_Layout_Intro.cshtml";
+}
+
+<div id="Hide_Intro_Box">
+    <a id="Hide_Intro" href="#" class="btn btn-default btn-sm" title="Hide Introduction"><i class="far fa-eye-slash" aria-hidden="true"></i></a>
+</div>
+<div id="Introduction" class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h2 id="FirstSentence">
+                If you wnat to practice memorizing words, a text or a translation of a text.
+            </h2>
+            <div id="Curtain_1" class="curtain"></div>
+        </div>
+        <div class="col-md-6">
+            <h3>
+                If you want to practice memorizing answers to questions.
+            </h3>
+            <div id="Curtain_2" class="curtain"></div>
+        </div>
+        <div class="w-100"></div>
+        <div class="col-md-6">
+            <h4>
+                If you want to practice memorizing lyrics.
+            </h4>
+            <div id="Curtain_3" class="curtain"></div>
+        </div>
+        <div class="col-md-6 text-right">
+            <h2>
+                Even if you want to practice memorizing a sequence chords...
+            </h2>
+            <div id="Curtain_4" class="curtain"></div>
+        </div>
+        <div class="w-100"></div>
+        <div class="col-md-6">
+            <h3>
+                ... you are in the right place!
+            </h3>
+            <div id="Curtain_5" class="curtain"></div>
+        </div>
+        <div class="col-md-6">
+            <h1 class="text-success text-center">
+                Remember Text
+            </h1>
+            <div id="Curtain_6" class="curtain"></div>
+        </div>
+        <div class="w-100"></div>
+        <div class="col-md-6">
+            <h4>
+                It's easy:
+                <a href="#" title="Register" data-toggle="tooltip"><i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;register</a>, choose language, save your text and practice.
+            </h4>
+            <div id="Curtain_7" class="curtain"></div>
+        </div>
+        <div class="col-md-6 text-center">
+            <h3>
+                You can also practice on other user's projects and share your own.
+            </h3>
+            <div id="Curtain_8" class="curtain"></div>
+        </div>
+    </div>
+</div>
+
+<div id="ProjectsBox">
+    <partial name="Partial/_Projects" data="@Model" />
+</div>
+
+<!-- Modal text -->
+<div class="modal fade" id="RT_ModalForProject" tabindex="-1" role="dialog" aria-labelledby="RT_ModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="RT_ModalTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="RT_ModalBody" class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

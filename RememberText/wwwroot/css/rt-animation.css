@@ -1,0 +1,75 @@
+﻿/*---- Simple keyframes START ----*/
+@keyframes Fade-alert-out {
+    0% {
+        margin-top: 0;
+    }
+
+    100% {
+        margin-top: -25%;
+    }
+}
+  @keyframes Fade-in {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+  }
+  @keyframes Fade-out {
+    0% {opacity: 1;}
+    100% {opacity: 0;}
+  }
+  @keyframes Open-down{
+      0%{min-height: 0%;}
+      100%{min-height: 100%}
+  }
+  @keyframes Open-right{
+      0%{width: 0%;}
+      100%{width: 100%}
+  }
+/*---- Simple keyframes END ----*/
+/*---- Navigation START ----*/
+@keyframes Open-logo{
+    0%{min-height: 0px;}
+    100%{min-height: 70px;}
+}
+@keyframes Paint-menu{
+    0%{background-color: #fff;}
+    100%{background-color: #f8f9fa;}
+}
+/*---- Navigation END ----*/
+/*---- Introduction keyframes START ----*/
+  @keyframes CurtainToLeft{
+    0%{background:rgb(255,255,255);left:100%;min-height:100%; min-width: 0%;}
+    100%{background:rgb(255,255,255);left:0%;min-height:100%; min-width: 100%;}
+  }
+  @keyframes CurtainToLeftAndUp{
+    0%{top:0%;min-height:100%; min-width: 100%;}
+    49%{top:0%;min-height:100%; min-width: 0%;}
+    50%{top:0%;min-height:0%; min-width: 0%;}
+    51%{top:100%;min-height:0%; min-width: 100%;}
+    100%{top:0%; min-height:100%; min-width: 100%;}
+  }
+  @keyframes CurtainUpAndRight{
+    0%{min-height:100%; min-width: 100%;}
+    49%{min-height:0%; min-width: 100%;}
+    50%{min-height:0%; min-width: 0%;}
+    51%{min-height:100%; min-width: 0%;}
+    100%{min-height:100%; min-width: 100%;}
+  }
+  @keyframes CurtainToRightAndUp{
+    0%{left: 0%;top: 0%;min-height:100%; min-width: 100%;}
+    49%{left: 100%;top: 0%;min-height:100%; min-width: 0%;}
+    50%{left: 0%;top: 0%;min-height:0%; min-width: 0%;}
+    51%{top: 100%;min-height:0%; min-width: 100%;}
+    100%{top: 0%;min-height:100%; min-width: 100%;}
+  }
+  @keyframes CurtainUpAndLeft{
+    0%{min-height:100%; min-width: 100%;}
+    49%{min-height:0%; min-width: 100%;}
+    50%{left:0%;min-height:0%; min-width: 0%;}
+    51%{left:100%;min-height:100%; min-width: 0%;}
+    100%{left:0%;min-height:100%; min-width: 100%;}
+  }
+  @keyframes CurtainToRight{
+    0%{background:rgb(255,255,255);left:0%;min-height:100%; min-width: 100%;}
+    100%{background:rgb(255,255,255);left:100%;min-height:100%; min-width: 0%;}
+  }
+/*---- Introduction keyframes END ----*/

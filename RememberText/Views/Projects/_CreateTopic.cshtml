@@ -1,0 +1,64 @@
+﻿@model RememberText.ViewModels.TopicFieldViewModel
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <p class="h5">
+                    <span class="badge badge-info">@Model.SourceLang</span>
+                    @if (!string.IsNullOrEmpty(Model.TargetLang))
+                    {
+                        @:<span class="text-info"><i class="far fa-arrow-alt-circle-right"></i></span>&nbsp;<span class="badge badge-info">@Model.TargetLang</span>
+                    }
+                </p>
+            </div>
+            <div class="card-body">
+                <form asp-action="CreateTopic" asp-controller="Projects" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input asp-for="SourceLang" type="hidden" />
+                    <input asp-for="TargetLang" type="hidden" />
+
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Title</span>
+                        </div>
+                        <input asp-for="TopicTitle" class="form-control" />
+                    </div>
+                    <span asp-validation-for="TopicTitle" class="text-danger"></span>
+                    <div class="form-row">
+                        <div class="input-group col-md-3 mt-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Number of Rows</span>
+                            </div>
+                            <input asp-for="NumberOfLines" class="form-control" />
+                        </div>
+                        <span asp-validation-for="NumberOfLines" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-3 mt-3">
+                            <input type="submit" value="Create" class="btn btn-success btn-block" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-3">
+    @if (!string.IsNullOrEmpty(Model.TargetLang))
+    {
+        <a asp-action="DefineTargetLang" asp-controller="Projects" asp-route-langCode="@Model.SourceLang" class="create-project btn btn-warning" title="">
+            <i class="fas fa-undo-alt"></i>&nbsp;Back
+        </a>
+    }
+    else
+    {
+        <a asp-action="CreateSingleText" asp-controller="Projects" class="create-project btn btn-warning" title="Choose The Main Language">
+            <i class="fas fa-undo-alt"></i>&nbsp;Back
+        </a>
+    }
+    <a asp-action="Index" asp-controller="Projects" class="btn btn-warning"><i class="fas fa-ban"></i>&nbsp;Cancel</a>
+</div>
+

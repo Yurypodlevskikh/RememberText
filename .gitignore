@@ -361,3 +361,9 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/LearnText
+/RememberText/appsettings.json
+/RememberText/wwwroot/lib
+/RememberText/wwwroot/css/site.min.css
+/RememberText/wwwroot/js/site.min.js
+/RememberText/wwwroot/js/site.min.js.map

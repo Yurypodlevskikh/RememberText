@@ -1,0 +1,42 @@
+[
+  {
+    "outputFileName": "wwwroot/css/site.min.css",
+    "inputFiles": [
+      "wwwroot/css/main.css",
+      "wwwroot/css/rt-animation.css",
+      "wwwroot/css/myBootstrap.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/introduction.min.css",
+    "inputFiles": [
+      "wwwroot/css/introduction.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/introduction.min.js",
+    "inputFiles": [
+      "wwwroot/js/introduction.js"
+    ],
+    // Optionally specify minifixcation options
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    //Optionally generate .map file
+    "sourceMap": true
+  }
+  //{
+  //  "outputFileName": "wwwroot/js/site.min.js",
+  //  "inputFiles": [
+  //    "wwwroot/js/main.js"
+  //  ],
+  //  // Optionally specify minifixcation options
+  //  "minify": {
+  //    "enabled": true,
+  //    "renameLocals": true
+  //  },
+  //  //Optionally generate .map file
+  //  "sourceMap": true
+  //}
+]
