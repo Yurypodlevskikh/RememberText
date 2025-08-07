@@ -1,0 +1,168 @@
+﻿@model RememberText.ViewModels.TopicsAndParamViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
+
+@if (Model.Topics.PLTopics != null && Model.Topics.PLTopics.Count() > 0)
+{
+    <table id="project_topics" class="table table-sm table-bordered table-striped table-hover table-responsive mb-2" style="min-width:800px;">
+        <thead class="thead-light">
+            <tr>
+                <th class="text-center align-middle">№</th>
+                <th class="text-center align-middle">
+                    <a asp-controller="Home" asp-action="Index"
+                   asp-route-ViewMode="@Model.Topics.ViewMode" asp-route-SortOrder="@Model.TopicSortParam.TitleSortParam"
+                   asp-route-PageNumber="@Model.Topics.PageNumber" asp-route-TagParam="@Model.Topics.TagParam"
+                   asp-route-SearchTitle="@Model.Topics.SearchTitle">@SharedLocalizer["Title"]</a>
+                    <i class="fas fa-sort"></i>
+                </th>
+                <th class="text-center align-middle" colspan="2">
+                    <a asp-controller="Home" asp-action="Index"
+                   asp-route-ViewMode="@Model.Topics.ViewMode" asp-route-SortOrder="@Model.TopicSortParam.SourceSortParam"
+                   asp-route-PageNumber="@Model.Topics.PageNumber" asp-route-TagParam="@Model.Topics.TagParam"
+                   asp-route-SearchTitle="@Model.Topics.SearchTitle"
+                   title="@SharedLocalizer["Source"]" data-toggle="tooltip">
+                        <i class="fas fa-home"></i>
+                    </a>
+                    <i class="fas fa-sort"></i>
+                    &nbsp;@SharedLocalizer["Practice"].Value&nbsp;
+                    <a asp-controller="Home" asp-action="Index"
+                   asp-route-ViewMode="@Model.Topics.ViewMode" asp-route-SortOrder="@Model.TopicSortParam.TargetSortParam"
+                   asp-route-PageNumber="@Model.Topics.PageNumber" asp-route-TagParam="@Model.Topics.TagParam"
+                   asp-route-SearchTitle="@Model.Topics.SearchTitle"
+                   title="@SharedLocalizer["Target"]" data-toggle="tooltip">
+                        <i class="fas fa-bullseye"></i>
+                    </a>
+                    <i class="fas fa-sort"></i>
+                </th>
+                <th class="text-center align-middle">
+                    @SharedLocalizer["Creator"].Value
+                </th>
+                <th class="text-center align-middle">
+                    <a asp-controller="Home" asp-action="Index"
+                   asp-route-ViewMode="@Model.Topics.ViewMode" asp-route-SortOrder="@Model.TopicSortParam.CreatedSortParam"
+                   asp-route-PageNumber="@Model.Topics.PageNumber" asp-route-TagParam="@Model.Topics.TagParam"
+                   asp-route-SearchTitle="@Model.Topics.SearchTitle">
+                        @SharedLocalizer["Created"]
+                    </a>
+                    <i class="fas fa-sort"></i>
+                </th>
+                <th class="text-center align-middle">
+                    <a asp-controller="Home" asp-action="Index"
+                   asp-route-ViewMode="@Model.Topics.ViewMode" asp-route-SortOrder="@Model.TopicSortParam.UpdatedSortParam"
+                   asp-route-PageNumber="@Model.Topics.PageNumber" asp-route-TagParam="@Model.Topics.TagParam"
+                   asp-route-SearchTitle="@Model.Topics.SearchTitle">
+                        @SharedLocalizer["Updated"]
+                    </a>
+                    <i class="fas fa-sort"></i>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int i = 1;
+                foreach (var item in Model.Topics.PLTopics)
+                {
+                    <tr>
+                        <td>
+                            @i
+                        </td>
+                        <td class="text-truncate">
+                            <a asp-controller="Home" asp-action="ProjectText" asp-route-Id="@item.TopicId" class="show-project-text">@item.TopicTitle</a>
+                        </td>
+                        <td class="text-center align-middle">
+                            <a asp-controller="Home" asp-action="PracticeSync" asp-route-Id="@item.TopicId" class="practice-link"
+                                title="@(string.IsNullOrEmpty(item.TargetLang) ? item.SourceLangName : item.SourceLangName + " ↣ " + item.TargetLangName)">
+                                @if (!string.IsNullOrEmpty(item.SourceBasicFlag))
+                                {
+                                    <div class="fflag fflag-@item.SourceBasicFlag ff-sm ff-lt ff-wave"></div>
+                                    <div class="fflag fflag-@item.SourceFlag ff-sm ff-lt ff-wave"></div>
+                                }
+                                else
+                                {
+                                    <div class="fflag fflag-@item.SourceFlag ff-sm ff-lt ff-wave"></div>
+                                }
+                                @if (!string.IsNullOrEmpty(item.TargetLang))
+                                {
+                                    <span class="text-dark"> ↣ </span>
+
+                                    @if (!string.IsNullOrEmpty(item.TargetBasicFlag))
+                                    {
+                                        <div class="fflag fflag-@item.TargetBasicFlag ff-sm ff-lt ff-wave"></div>
+                                        <div class="fflag fflag-@item.TargetFlag ff-sm ff-lt ff-wave"></div>
+                                    }
+                                    else
+                                    {
+                                        <div class="fflag fflag-@item.TargetFlag ff-sm ff-lt ff-wave"></div>
+                                    }
+                                }
+                            </a>
+                        </td>
+                        <td class="text-center align-middle">
+                            @if (!string.IsNullOrEmpty(item.TargetLang))
+                            {
+                                <a asp-controller="Home" asp-action="PracticeSync" asp-route-Id="@item.TopicId" asp-route-HowToDisplay="viceversa" class="practice-link"
+                                    title="@(item.TargetLangName + " ↣ " + item.SourceLangName)">
+                                    @if (!string.IsNullOrEmpty(item.TargetBasicFlag))
+                                    {
+                                        <div class="fflag fflag-@item.TargetBasicFlag ff-sm ff-lt ff-wave"></div>
+                                        <div class="fflag fflag-@item.TargetFlag ff-sm ff-lt ff-wave"></div>
+                                    }
+                                    else
+                                    {
+                                        <div class="fflag fflag-@item.TargetFlag ff-sm ff-lt ff-wave"></div>
+                                    }
+
+                                    <span class="text-dark"> ↣ </span>
+
+                                    @if (!string.IsNullOrEmpty(item.SourceBasicFlag))
+                                    {
+                                        <div class="fflag fflag-@item.SourceBasicFlag ff-sm ff-lt ff-wave"></div>
+                                        <div class="fflag fflag-@item.SourceFlag ff-sm ff-lt ff-wave"></div>
+                                    }
+                                    else
+                                    {
+                                        <div class="fflag fflag-@item.SourceFlag ff-sm ff-lt ff-wave"></div>
+                                    }
+                                </a>
+                            }
+                            else
+                            {
+                                @:-
+                            }
+                        </td>
+                        <td class="align-middle">
+                            @item.AuthorNickname
+                        </td>
+                        <td class="text-center align-middle">
+                            <span title="@item.CreatedDateTime.ToString("T")" data-toggle="tooltip">@item.CreatedDateTime.ToString("d")</span>
+                        </td>
+                        <td>
+                            @if (item.UpdatedDateTime != null)
+                            {
+                                <span title="@string.Format("{0:T}", item.UpdatedDateTime)" data-toggle="tooltip">@string.Format("{0:d}", item.UpdatedDateTime)</span>
+                            }
+                        </td>
+                    </tr>
+
+                    i++;
+                }
+            }
+        </tbody>
+    </table>
+
+    <partial name="Partial/_PaginatedPublicTopics" model="@Model" />
+}
+else
+{
+    <h5>@SharedLocalizer["NoProjects"]</h5>
+}
+
+<environment include="Development">
+    <script src="~/js/Project/PracticeLinkAsync.js" asp-append-version="true"></script>
+</environment>
+<environment exclude="Development">
+    <script src="~/js/Project/PracticeLinkAsync.min.js" asp-append-version="true"></script>
+</environment>
+
+
+

@@ -1,7 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using RememberText.Domain.Entities.Identity
+@using Microsoft.AspNetCore.Mvc.Localization
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
+@inject IHtmlLocalizer<SharedResource> Localizer 
 
 <ul class="navbar-nav justify-content-center">
     @if (SignInManager.IsSignedIn(User))
@@ -24,11 +26,13 @@
                         Hello @currUser.Nickname!
                     </a>
                 }*@
-            <a asp-action="Index" asp-controller="Projects" class="nav-link text-success"><i class="far fa-list-alt"></i>&nbsp;Hello @currUser.Nickname!</a>
+            <a asp-controller="Projects" asp-action="Topics" asp-route-viewMode="UserTopics" class="nav-link text-success">
+                <i class="far fa-smile"></i>&nbsp;@Localizer["Hello"].Value @currUser.Nickname!
+            </a>
             </li>
             <li class="nav-item">
-                <form id="logoutForm" class="navbar-right" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                    <button type="submit" class="btn btn-link text-dark" title="Logg Off" data-toggle="tooltip">
+                <form id="logoutForm" class="navbar-right" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home")">
+                    <button type="submit" class="btn btn-link text-dark" title="@Localizer["LoggOff"]" data-toggle="tooltip">
                         <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
                     </button>
                 </form>

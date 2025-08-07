@@ -31,6 +31,7 @@ namespace RememberText.Data
 
         public async Task InitializeIdentityAsync()
         {
+            // Create Roles
             if (!await _RoleManager.RoleExistsAsync(Role.GenAdministrator))
                 await _RoleManager.CreateAsync(new Role { Name = Role.GenAdministrator });
 
@@ -40,6 +41,7 @@ namespace RememberText.Data
             if (!await _RoleManager.RoleExistsAsync(Role.User))
                 await _RoleManager.CreateAsync(new Role { Name = Role.User });
 
+            // Add General Administrator
             if(await _UserManager.FindByNameAsync(User.AdminEmail) is null)
             {
                 var admin = new User
@@ -49,7 +51,8 @@ namespace RememberText.Data
                     Email = User.AdminEmail,
                     RegistrationDate = DateTime.Now,
                     EmailConfirmed = true,
-                    YearOfBirth = 1974
+                    YearOfBirth = 1974,
+                    PreffLang = "1,2,3"
                 };
                 
                 var create_result = await _UserManager.CreateAsync(admin, User.AdminDefaultPassword);

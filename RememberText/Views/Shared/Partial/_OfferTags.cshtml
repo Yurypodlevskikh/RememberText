@@ -1,0 +1,11 @@
+﻿@model List<RememberText.ViewModels.TagViewModel>
+
+@if (Model != null && Model.Count() > 0)
+{
+<ul class="list-unstyled mb-0">
+    @foreach (var item in Model)
+    {
+        <li class="tag-offer" data-tagid="@item.Id"><i class="fas fa-search-plus"></i>@item.TagName</li>
+    }
+</ul>
+}

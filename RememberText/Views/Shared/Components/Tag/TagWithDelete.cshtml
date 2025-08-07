@@ -1,0 +1,23 @@
+﻿@model List<RememberText.ViewModels.TagWithDeleteViewModel>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
+
+@if (Model != null && Model.Count > 0)
+{
+    foreach (var tag in Model)
+    {
+        <li class="list-inline-item">
+            <form class="tag-delete-form" asp-controller="ManageTags" asp-action="Delete" method="post" class="delete-tag">
+                <input id="deltag_@tag.Id" type="hidden" name="TagId" value="@tag.Id" />
+                <input id="langCode_@tag.Id" type="hidden" name="LangCode" value="@tag.LangCode" />
+                <input id="textId_@tag.TextId" type="hidden" name="TextId" value="@tag.TextId" />
+                <span class="control-label label-default">@tag.TagName</span>
+                <input type="submit" class="deltag" value="&times;" />
+            </form>
+        </li>
+    }
+}
+else
+{
+    <li class="list-inline-item">@SharedLocalizer["NoAssignedTags"].Value</li>
+}

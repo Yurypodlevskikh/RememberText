@@ -1,0 +1,9 @@
+﻿@model IEnumerable<RememberText.ViewModels.TagAndTaggedTexts>
+
+@if (Model != null && Model.Count() > 0)
+{
+    foreach (var item in Model)
+    {
+        <a href="#">@item.TagName</a>
+    }
+}

@@ -27,24 +27,24 @@
     -webkit-animation: Paint-menu 1s ease-out 1s forwards;
     animation: Paint-menu 1s ease-out 1s forwards;
 }
-#Logo_box_Intro {
+#logo_box_intro {
     background-image: url('../images/RememberTextWhite.png');
     background-repeat: no-repeat;
     background-size: cover;
-    -moz-border-radius: 3px;/*Firefox*/
-    -webkit-border-radius: 3px;/*Safari, Chrome*/
+    -moz-border-radius: 3px; /*Firefox*/
+    -webkit-border-radius: 3px; /*Safari, Chrome*/
     border-radius: 3px;
     height: 0;
-    position: absolute;
+    position: fixed;
     top: 0;
     min-width: 70px;
     z-index: 2040;
 }
-#Logo_box_Intro.rt-show {
-    -moz-animation: Open-logo 1s ease-in 1s forwards;
-    -webkit-animation: Open-logo 1s ease-in 1s forwards;
-    animation: Open-logo 1s ease-in 1s forwards;
-}
+    #logo_box_intro.rt-show {
+        -moz-animation: Open-logo 1s ease-in 1s forwards;
+        -webkit-animation: Open-logo 1s ease-in 1s forwards;
+        animation: Open-logo 1s ease-in 1s forwards;
+    }
 #RT_navbar_Intro {
     opacity: 0;
 }
@@ -53,26 +53,29 @@
     -webkit-animation: Fade-in 2s ease-out 1s forwards;
     animation: Fade-in 2s ease-out 1s forwards;
 }
-#Green_Line_Intro {
+#logo_line_intro {
     bottom: 0;
     left: 0;
     min-width: 0;
     position: absolute;
     z-index: -1;
 }
-#Green_Line_Intro.rt-show {
+#logo_line_intro.rt-show {
     -moz-animation: Open-right 1s linear 2s forwards;
     -webkit-animation: Open-right 1s linear 2s forwards;
     animation: Open-right 1s linear 2s forwards;
 }
 
-#ProjectsBox {
+#ProjectsBox, label.rt-nav-toggle {
     opacity: 0;
 }
-#ProjectsBox.rt-show {
-    -moz-animation: Fade-in 3s ease 1s forwards;
-    -webkit-animation: Fade-in 3s ease 1s forwards;
-    animation: Fade-in 3s ease 1s forwards;
+    #ProjectsBox.rt-show, label.rt-nav-toggle.rt-show {
+        -moz-animation: Fade-in 3s ease 1s forwards;
+        -webkit-animation: Fade-in 3s ease 1s forwards;
+        animation: Fade-in 3s ease 1s forwards;
+    }
+
+label.rt-nav-toggle.rt-show {
 }
 
 #RT_Footer {

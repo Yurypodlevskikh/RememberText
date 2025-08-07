@@ -1,0 +1,122 @@
+﻿@model List<RememberText.ViewModels.SidebarTagListsByLangViewModel>
+
+@if (Model != null && Model.Count() > 0)
+{
+    int i = 0;
+    <div class="accordion" id="accordion-tag-sidebar">
+        @foreach (var lang in Model)
+        {
+            string collapsShow = "collapse";
+            if (i == 0)
+            {
+                collapsShow += " show";
+            }
+            <div class="card">
+                <div class="card-header" id="heading-@lang.LangTags.First().LangCode">
+                    <div class="h4 mb-0">
+                        @if (lang.LangTags.Count() > 1)
+                        {
+                            <button class="btn btn-sm btn-success @(i > 0 ? "collapsed" : "")"
+                        data-toggle="collapse" data-target="#collapse-@lang.LangTags.First().LangCode"
+                        aria-expanded="false" aria-controls="collapse-@lang.LangTags.First().LangCode"
+                        title="@lang.LangTags.First().LangName">
+                                <strong>
+                                    @lang.LangTags.First().LangCode.Split('-')[0]
+                                </strong>
+                                <span class="badge badge-light">
+                                    @lang.NumberOfAllTags
+                                </span>
+                            </button>
+
+                            for (int lt = 0; lt < lang.LangTags.Count(); lt++)
+                            {
+                                @*If the counter is greater than the number of colors,
+                then these are the default colors:*@
+                                string colorHex = "ffc107";
+                                string textColor = "text-dark";
+                                if (lt < lang.SidebarColors.Count())
+                                {
+                                    colorHex = lang.SidebarColors[lt].ColorHex;
+                                    if (!lang.SidebarColors[lt].TextBlack)
+                                        textColor = "text-light";
+                                }
+
+                                <button type="button" class="btn btn-sm py-0 px-1" title="@lang.LangTags[lt].LangName"
+                        style="background: @("#" + colorHex);">
+                                    <span class="small @textColor">
+                                        <strong>
+                                            @lang.LangTags[lt].LangCode.Split('-')[1]
+                                            <span class="badge badge-light">@lang.LangTags[lt].NumberOfTags</span>
+                                        </strong>
+                                    </span>
+                                </button>
+                            }
+                        }
+                        else
+                        {
+                            <!-- Single Language Button -->
+                            <button class="btn btn-sm btn-success @(i > 0 ? "collapsed" : "")"
+                        data-toggle="collapse" data-target="#collapse-@lang.LangTags.First().LangCode"
+                        aria-expanded="false" aria-controls="collapse-@lang.LangTags.First().LangCode"
+                        title="@lang.LangTags.First().LangName">
+                                @lang.LangTags.First().LangCode
+                                <span class="badge badge-light">@lang.LangTags.First().NumberOfTags</span>
+                            </button>
+                        }
+                    </div>
+                </div>
+
+                <div id="collapse-@lang.LangTags.First().LangCode" class="@collapsShow"
+             aria-labelledby="heading-@lang.LangTags.First().LangCode"
+             data-parent="#accordion-tag-sidebar">
+                    <div class="card-body p-2">
+                        @if (lang.LangTags.Count() > 1)
+                        {
+                            <!-- Loop through languages within the base language -->
+                            for (int l = 0; l < lang.LangTags.Count(); l++)
+                            {
+                                <!-- The loop through Tags -->
+                                foreach (var tags in lang.LangTags[l].Tags)
+                                {
+                                    @*If the counter is greater than the number of colors,
+                then these are the default colors:*@
+                                    string colorHex = "ffc107";
+                                    string textColor = "text-dark";
+                                    if (l < lang.SidebarColors.Count())
+                                    {
+                                        colorHex = lang.SidebarColors[l].ColorHex;
+                                        if (!lang.SidebarColors[l].TextBlack)
+                                            textColor = "text-light";
+                                    }
+
+                                    <a asp-controller="Home" asp-action="Index" asp-route-viewMode="TagPublicTopics"
+                   asp-route-tagParam="@(lang.LangTags[l].LangCode+"_"+tags.Id)" class="badge @textColor"
+                   style="background-color: @("#" + colorHex);">
+                                        @tags.TagName
+                                        <small class="badge badge-secondary badge-light">@tags.TaggedTopics</small>
+                                    </a>
+                                }
+                            }
+                        }
+                        else
+                        {
+                            <!-- Tags for the Single Language Button -->
+                            if (lang.LangTags.First().Tags != null && lang.LangTags.First().Tags.Count() > 0)
+                            {
+                                <!-- Loop through Tags -->
+                                foreach (var tag in lang.LangTags.First().Tags)
+                                {
+                                    <a asp-controller="Home" asp-action="Index" asp-route-viewMode="TagPublicTopics" asp-route-tagParam="@(lang.LangTags.First().LangCode+"_"+tag.Id)" class="badge badge-dark">
+                                        @tag.TagName
+                                        <small class="badge badge-light">@tag.TaggedTopics</small>
+                                    </a>
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            i++;
+        }
+    </div>
+}

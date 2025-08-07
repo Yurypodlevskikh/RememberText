@@ -1,0 +1,116 @@
+﻿@model RememberText.ViewModels.ProjectTextViewModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
+
+@{
+    ViewData["Title"] = SharedLocalizer["Practice"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (Model != null && Model.SourceText != null)
+{
+    <h3>
+        @ViewData["Title"]<text>:&nbsp;</text>@Model.TopicTitle
+    </h3>
+    string sourceLang = !string.IsNullOrEmpty(Model.HowToDisplay) && !string.IsNullOrEmpty(Model.TargetLang) ?
+               Model.TargetLang : Model.SourceLang;
+    string targetLang = !string.IsNullOrEmpty(Model.HowToDisplay) && !string.IsNullOrEmpty(Model.TargetLang) ?
+           Model.SourceLang : Model.TargetLang;
+
+    <h4>
+        <a href="@Model.ReturnUrl" title="@SharedLocalizer["Back"].Value" data-toggle="tooltip" class="text-info small pr-2">
+            <i class="fas fa-hand-point-left"></i>
+        </a>
+        <span class="badge badge-primary">@sourceLang</span>
+        @if(!string.IsNullOrEmpty(targetLang))
+        {
+            <a asp-action="Practice" asp-controller="Projects" asp-route-Id="@Model.TopicId" asp-route-HowToDisplay="@(string.IsNullOrEmpty(Model.HowToDisplay) ? "viceversa" : "")"
+       title="@SharedLocalizer["ChangeLanguage"]" data-toggle="tooltip" class="text-warning small px-2">
+                <i class="fas fa-exchange-alt"></i>
+            </a>
+            <span class="badge badge-info">@targetLang</span>
+        }
+        <a asp-action="Practice" asp-controller="Projects" asp-route-Id="@Model.TopicId" title="@SharedLocalizer["Repeat"].Value" data-toggle="tooltip" class="text-warning small pl-2">
+            <i class="fas fa-redo-alt"></i>
+        </a>
+    </h4>
+
+    <hr />
+
+    <div class="row">
+        <div class="col">
+            <div id="sentence_box">
+                @if (Model.SourceText != null)
+                {
+                    int sentenceCount = Model.SourceText.Count();
+                    if (sentenceCount > 0)
+                    {
+                        for (int i = 0; i < sentenceCount; i++)
+                        {
+                            if (Model.TargetText != null)
+                            {
+                                <div class="show-origin-text mb-1">
+                                    <span class="badge badge-info">@(i+1)</span>&nbsp;
+                                    @Model.SourceText[i].Sentence
+                                    <span style="display:none;">@Model.TargetText[i].Sentence</span>
+                                </div>
+                                <div class="form-group has-success">
+                                    <button type="button" class="btn btn-sm btn-light mb-1" data-container="body" data-toggle="popover" data-trigger="focus" data-content="@Model.TargetText[i].Sentence">
+                                        <i class="far fa-question-circle"></i>&nbsp;@(i+1).&nbsp;
+                                    </button>
+
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">@(i+1)</span>
+                                        </div>
+                                        <input id="@("SentInput_" + Model.SourceText[i].SentenceIndex)" type="text" class="form-control sentence-input">
+                                    </div>
+
+                                </div>
+                            }
+                            else
+                            {
+                                <div>
+                                    <span style="display:none;">@Model.SourceText[i].Sentence</span>
+                                </div>
+                                <div class="form-group has-success">
+                                    <button type="button" class="btn btn-sm btn-light mb-1" data-container="body" data-toggle="popover" data-trigger="focus" data-content="@Model.SourceText[i].Sentence">
+                                        <i class="far fa-question-circle"></i>&nbsp;@(i+1).&nbsp;
+                                    </button>
+
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">@(i+1)</span>
+                                        </div>
+                                        <input id="@("SentInput_" + Model.SourceText[i].SentenceIndex)" type="text" class="form-control sentence-input">
+                                    </div>
+
+                                </div>
+                            }
+                        }
+                    }
+                }
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <h5>@SharedLocalizer["NoProjects"]</h5>
+}
+
+@section Scripts{
+    <script type="text/javascript">
+        (function ($) {
+            $('[data-toggle="popover"]').popover()
+        }(jQuery))
+    </script>
+
+    <environment include="Development">
+        <script src="~/js/Project/PracticeProject.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/Project/PracticeProject.min.js" asp-append-version="true"></script>
+    </environment>
+}

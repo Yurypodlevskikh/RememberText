@@ -1,0 +1,314 @@
+﻿@model RememberText.ViewModels.EditProjectViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
+
+@{
+    ViewData["Title"] = SharedLocalizer["EditProject"].Value;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (Model != null)
+{
+    <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
+        <div class="btn-group mr-2" role="group" aria-label="Back group">
+            <a href="@Model.ReturnUrl" title="@SharedLocalizer["Back"].Value" data-toggle="tooltip" class="btn btn-light">
+                <i class="fas fa-hand-point-left"></i>
+            </a>
+        </div>
+        <div class="btn-group mr-2" role="group" aria-label="Change languages group">
+            @if (Model.SourceText != null)
+            {
+                <button type="button" class="btn btn-light" disabled>
+                    <span class="badge badge-info">@Model.SourceLang</span>
+                </button>
+
+                @if (string.IsNullOrEmpty(Model.WhatToEdit))
+                {
+                    <button type="button" class="btn btn-light">
+                        <i class="fas fa-arrow-circle-right"></i>
+                    </button>
+
+                }
+                else
+                {
+                    <a asp-action="EditProject" asp-controller="Projects" asp-route-Id="@Model.TopicId"
+                       asp-route-WhatToEdit="@(Model.WhatToEdit == "source" ? "target" : "source")"
+                       title="@SharedLocalizer["ChangeLanguage"]" data-toggle="tooltip" class="btn btn-light">
+                        <i class="fas fa-exchange-alt"></i>
+                    </a>
+                }
+                
+            }
+
+            <button type="button" class="btn btn-light" disabled>
+                <span class="badge badge-primary">
+                    @Model.TargetLang
+                </span>
+            </button>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-controller="Projects" asp-action="EditTitle" method="post" class="title-copyright">
+                <input type="hidden" name="TopicId" value="@Model.TopicId" />
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            @ViewData["Title"]:
+
+                        </div>
+                    </div>
+
+                    <input type="text" name="TopicTitle" value="@Model.TopicTitle" class="form-control" />
+
+                    <div class="input-group-append">
+                        <input type="submit" value="@SharedLocalizer["Send"].Value" class="btn btn-success" />
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <form asp-controller="Projects" asp-action="EditCopyright" method="post" class="title-copyright" id="copyright-form">
+                <input asp-for="TopicId" id="CopyrightTopicId" type="hidden" />
+                <input asp-for="CopyrightId" type="hidden" />
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">@SharedLocalizer["Copyright"].Value</div>
+                    </div>
+                    <input asp-for="CopyrightName" class="form-control" />
+                    <div class="input-group-append">
+                        <input type="submit" value="@SharedLocalizer["Send"].Value" class="btn btn-success" />
+                    </div>
+                </div>
+                <div class="search-suggestions-box" style="display:none;">
+                        @*<ul class="list-unstyled mb-0">
+    <li class="copyright-suggests"><i class="fas fa-search-plus"></i>Item 1</li>
+</ul>*@
+                    </div>
+                
+            </form>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="row">
+        <div class="col">
+            <div id="sentence_box">
+                <span id="error-memory" style="display:none;">@SharedLocalizer["MemoryLimitIsOver"].Value</span>
+                <span id="error-input-restriction" style="display:none;">@SharedLocalizer["InputRestriction"].Value</span>
+                @if (Model.TargetText != null)
+                {
+                    int sentenceCount = Model.TargetText.Count();
+                    if (sentenceCount > 0)
+                    {
+                        int sentInputCount = 1;
+                        string aFocus = "";
+                        for (int i = 0; i < sentenceCount; i++)
+                        {
+                            if(i == 0){
+                                aFocus = "autofocus";
+                            }
+                            if (Model.SourceText != null)
+                                {
+                                    if (string.IsNullOrEmpty(Model.WhatToEdit))
+                                    {
+                                        <form id="@("EditProjectTo_" + Model.SourceText[i].SentenceIndex)" class="edit-project-form" asp-controller="Projects" asp-action="EditProject" method="post">
+                                            <input id="@("TopicIdTo_" + Model.TopicId)" type="hidden" name="TopicId" value="@Model.TopicId" />
+                                            <input id="@("WhatToEditTo_" + Model.SourceTextId)" type="hidden" name="WhatToEdit" value="@Model.WhatToEdit" />
+                                            <input id="@("SourceLang_" + Model.SourceTextId)" type="hidden" name="TargetLang" value="@Model.SourceLang" />
+                                            <input id="@("SourceId_" + Model.SourceTextId)" type="hidden" name="TargetTextId" value="@Model.SourceTextId" />
+                                            <input id="@("SourceIndex_" + Model.SourceText[i].SentenceIndex)" type="hidden" name="TargetTextIndex" value="@Model.SourceText[i].SentenceIndex" />
+
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <span class="badge badge-info">
+                                                            @(i+1)
+                                                            @Model.SourceLang.Substring(0, 2)
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                                <input id="@("SentInput_" + sentInputCount)"
+                                                       type="text" name="Sentence" class="form-control sentence-input"
+                                                       value="@Model.SourceText[i].Sentence" @aFocus>
+                                                @{ sentInputCount++; }
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-success" type="submit" name="ActionBtn" value="edit">@SharedLocalizer["Send"].Value</button>
+                                                    <button class="btn btn-danger" type="submit" name="ActionBtn" value="delete">@SharedLocalizer["Delete"].Value</button>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                        <br />
+                                    }
+                                    else
+                                    {
+                                        <label for="@("SentInput_" + Model.SourceText[i].SentenceIndex)">
+                                            <span class="badge badge-info">@(i+1)</span>&nbsp;@Model.SourceText[i].Sentence
+                                        </label>
+                                    }
+                                }
+                            if (Model.SourceText != null)
+                            {
+                                aFocus = "";
+                            }
+                                <form id="@("EditProjectForm_" + Model.TargetText[i].SentenceIndex)" class="edit-project-form" asp-controller="Projects" asp-action="EditProject" method="post">
+                                    <input id="@("TopicId_" + Model.TopicId)" type="hidden" name="TopicId" value="@Model.TopicId" />
+                                    <input id="@("WhatToEdit_" + Model.TargetTextId)" type="hidden" name="WhatToEdit" value="@Model.WhatToEdit" />
+                                    <input id="@("TargetLang_" + Model.TargetTextId)" type="hidden" name="TargetLang" value="@Model.TargetLang" />
+                                    <input id="@("TargetId_" + Model.TargetTextId)" type="hidden" name="TargetTextId" value="@Model.TargetTextId" />
+                                    <input id="@("TargetIndex_" + Model.TargetText[i].SentenceIndex)" type="hidden" name="TargetTextIndex" value="@Model.TargetText[i].SentenceIndex" />
+
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <span class="badge badge-primary">
+                                                    @(i+1)
+                                                    @Model.TargetLang.Substring(0, 2)
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <input id="@("SentInput_" + sentInputCount)"
+                                               type="text" name="Sentence" class="form-control sentence-input"
+                                               value="@Model.TargetText[i].Sentence" @aFocus>
+                                        @{ sentInputCount++; }
+                                        <div class="input-group-append">
+                                            <button class="btn btn-success" type="submit" name="ActionBtn" value="edit">@SharedLocalizer["Send"].Value</button>
+                                            <button class="btn btn-danger" type="submit" name="ActionBtn" value="delete">@SharedLocalizer["Delete"].Value</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <hr />
+                        }
+                    }
+                }
+            </div>
+            <form id="AddRowsToProjectForm" class="add-rows-to-project" asp-action="AddLinesToProject" method="post">
+                <input id="@("AddRowsTopicId")" type="hidden" name="TopicId" value="@Model.TopicId" />
+                <input id="@("AddRowsWhatToEdit")" type="hidden" name="WhatToEdit" value="@Model.WhatToEdit" />
+                <div class="form-row">
+                    <div class="input-group col-md-6 col-lg-4 col-xl-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">@SharedLocalizer["NumberOfRows"].Value +</span>
+                        </div>
+                        <input id="NumberOfLines" type="number" name="NumberOfLines" class="form-control" />
+                        <div class="input-group-append">
+                            <button class="btn btn-success" type="submit">@SharedLocalizer["Add"].Value</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <hr class="mb-0" />
+
+    <!-- Tags START -->
+    <!-- Assigned Tags START -->
+    @*<div class="row">
+            <div class="col-sm-6">
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <a class="btn btn-sm btn-success text-white tagbtn">
+                            Assigned (@Model.TargetLang.Substring(0, 2)) Tags
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            @if (Model.SourceText != null)
+            {
+                <div class="col-sm-6">
+                    <div class="card mt-3">
+                        <div class="card-header">
+                            <a class="btn btn-sm btn-success text-white tagbtn">
+                                Assigned (@Model.SourceLang.Substring(0, 2)) Tags
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>*@
+    <!-- Assigned Tags END -->
+
+    <div class="row">
+        <div class="col-md-6">
+            <!-- Available Target Tags Button START -->
+            @*<form asp-action="GetAvailableTargetTags" method="post">
+                    <button class="btn btn-light mt-3">
+                        Available (@Model.TargetLang.Substring(0, 2)) Tags
+                    </button>
+                </form>*@
+            <!-- Available Target Button Tags END -->
+            <!-- Create Target Tags START -->
+
+            <div class="card mt-3">
+                <div class="card-body">
+                    <ul class="list-inline">
+                        <vc:tag view-name="TagWithDelete" lang-code="@Model.TargetLang" text-id="@Model.TargetTextId"></vc:tag>
+                    </ul>
+                    <form class="tag-form" asp-action="CreateTag" asp-controller="ManageTags" method="post">
+                        <input id="TargetTextIdToTag" type="hidden" name="TextId" value="@Model.TargetTextId" />
+                        <input id="TargetLangToTag" type="hidden" name="LangCode" value="@Model.TargetLang" />
+                        <input id="TargetTagId" type="hidden" name="TagId" />
+                        <div class="form-group">
+                            <input type="text" name="TagName" class="form-control input-sm" autocomplete="off" />
+                            <div class="search-suggestions-box" style="display:none;"></div>
+                        </div>
+                        <input type="submit" name="SaveTag" class="btn btn-sm btn-success" value="Add Your (@Model.TargetLang.Substring(0, 2)) Tag" />
+                    </form>
+                </div>
+            </div>
+            <!-- Add Target Tags END -->
+        </div>
+
+        @if (Model.SourceLang != null)
+        {
+            <div class="col-md-6">
+                <!-- Available Source Button Tags START -->
+                @*<form asp-action="GetAvailableSourceTags" method="post">
+                        <button class="btn btn-light mt-3">
+                            Available (@Model.SourceLang.Substring(0, 2)) Tags
+                        </button>
+                    </form>*@
+                <!-- Available Source Button Tags END -->
+                <!-- Create Source Tags START -->
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <ul class="list-inline">
+                            <vc:tag view-name="TagWithDelete" lang-code="@Model.SourceLang" text-id="@Model.SourceTextId"></vc:tag>
+                        </ul>
+                        <form class="tag-form" asp-action="CreateTag" asp-controller="ManageTags" method="post">
+                            <input id="SourceTextIdToTag" type="hidden" name="TextId" value="@Model.SourceTextId" />
+                            <input id="SourceLangToTag" type="hidden" name="LangCode" value="@Model.SourceLang" />
+                            <input id="SourceTagId" type="hidden" name="TagId" />
+                            <div class="form-group">
+                                <input type="text" name="TagName" class="form-control input-sm" autocomplete="off" onfocus="tagOffer(this)" />
+                                <div class="search-suggestions-box" style="display:none;"></div>
+                            </div>
+                            <input type="submit" name="SaveTag" class="btn btn-sm btn-success" value="Add Your (@Model.SourceLang.Substring(0, 2)) Tag" />
+                        </form>
+                    </div>
+                </div>
+                <!-- Add Source Tags END -->
+            </div>
+        }
+    </div>
+    <!-- Tags END -->
+}
+
+@section Scripts{
+<environment include="Development">
+    <script src="~/js/Project/EditProjectTitleCopyright.js" asp-append-version="true" type="module"></script>
+    <script src="~/js/Project/EditProject.js" asp-append-version="true" type="module"></script>
+    <script src="~/js/Project/TagOffer.js" asp-append-version="true" type="module"></script>
+</environment>
+<environment exclude="Development">
+    <script src="~/js/Project/EditProjectTitleCopyright.min.js" asp-append-version="true" type="module"></script>
+    <script src="~/js/Project/EditProject.min.js" asp-append-version="true" type="module"></script>
+    <script src="~/js/Project/TagOffer.min.js" asp-append-version="true" type="module"></script>
+</environment>
+}

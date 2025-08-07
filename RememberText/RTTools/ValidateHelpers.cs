@@ -1,12 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using RememberText.Models;
-using System;
-using System.Net;
+﻿using RememberText.Models;
 //using System.Security.Policy;
 using System.Text.RegularExpressions;
-using Microsoft.AspNetCore.Mvc;
-using Org.BouncyCastle.Security;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace RememberText.RTTools
 {
@@ -79,55 +73,5 @@ namespace RememberText.RTTools
             return response;
         }
         #endregion DecimalIsValid
-
-        #region IPAddress
-        public static string getIPAddress(IHttpContextAccessor httpContextAccessor)
-        {
-            const string myIp = "83.248.115.115";
-            string ip = httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
-            //var ipData = WebClient()
-
-            return ip;
-        }
-
-        private const string NullIpAddress = "::1";
-        public static void IsLocalReturnUrl(HttpRequest req, out string returnUrl)
-        {
-            //bool isIpAddress = IPAddress.TryParse("134.201.250.155", out remoteIpAddress);
-
-            ConnectionInfo connection = req.HttpContext.Connection;
-            IPAddress remoteIpAddress = connection.RemoteIpAddress;
-            IPAddress localIpAddress = connection.LocalIpAddress;
-            returnUrl = "~/";
-
-            bool isLocal = remoteIpAddress.IsSet() ? localIpAddress.IsSet() ? remoteIpAddress.Equals(localIpAddress) : IPAddress.IsLoopback(remoteIpAddress) : true;
-
-            if(isLocal)
-            {
-                Uri uri = new Uri(req.Headers["Referer"]);
-                returnUrl = uri.PathAndQuery;
-            }
-        }
-
-        private static bool IsSet(this IPAddress address)
-        {
-            return address != null && address.ToString() != NullIpAddress;
-        }
-        #endregion IPAddress
-
-        public static bool IsAjaxRequest(this HttpRequest req)
-        {
-            if(req == null)
-            {
-                throw new ArgumentNullException("request");
-            }
-
-            if(req.Headers != null)
-            {
-                return req.Headers["X-Requested-With"] == "XMLHttpRequest";
-            }
-
-            return false;
-        }
     }
 }

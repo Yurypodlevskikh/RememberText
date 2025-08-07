@@ -1,0 +1,132 @@
+﻿@model RememberText.ViewModels.PracticeSyncViewModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
+
+@{
+    ViewData["Title"] = SharedLocalizer["Practice"].Value;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (Model != null && Model.SourceText != null)
+{
+    <h3>
+        @ViewData["Title"]<text>:&nbsp;</text>@Model.TopicTitle
+    </h3>
+
+    string sourceLang = !string.IsNullOrEmpty(Model.HowToDisplay) && !string.IsNullOrEmpty(Model.TargetLang) ?
+               Model.TargetLang : Model.SourceLang;
+    string targetLang = !string.IsNullOrEmpty(Model.HowToDisplay) && !string.IsNullOrEmpty(Model.TargetLang) ?
+           Model.SourceLang : Model.TargetLang;
+
+    <h4>
+        <a href="@Model.ReturnUrl" title="@SharedLocalizer["Back"].Value" class="text-warning small pr-2">
+            <i class="fas fa-undo-alt"></i>
+        </a>
+        <span class="badge badge-primary">@sourceLang</span>
+        <a asp-action="PracticeSync" asp-controller="Projects" asp-route-Id="@Model.TopicId" asp-route-HowToDisplay="@(string.IsNullOrEmpty(Model.HowToDisplay) ? "viceversa" : "")" 
+           title="Change languages" class="text-warning small px-2">
+            <i class="fas fa-exchange-alt"></i>
+        </a>
+        <span class="badge badge-info">@targetLang</span>
+        <a asp-action="PracticeSync" asp-controller="Projects" asp-route-Id="@Model.TopicId" title="@SharedLocalizer["Repeat"]" class="text-warning small pl-2">
+            <i class="fas fa-redo-alt"></i>
+        </a>
+    </h4>
+
+    <hr />
+
+    <div class="row">
+        <div class="col">
+
+            @{
+                int sentCount = Model.SourceText.Count();
+                string accost = @SharedLocalizer["ChooseSentenceToPractice"].Value;
+                string accostStatus = "text-dark";
+
+                if (Model.CorrectAnswersIndexesHashSet != null && Model.CorrectAnswersIndexesHashSet.Count() == sentCount)
+                {
+
+                    accostStatus = "text-success";
+                    accost = @SharedLocalizer["CongratulationsYouFilledOutTheseExercises"].Value;
+                }
+            }
+
+            <p class="lead @accostStatus">@accost</p>
+
+            <span class="spanTableWrapper">
+                <span class="spanTableWithoutBorder">
+                    @{
+
+                        for (int i = 0; i < sentCount; i++)
+                        {
+                            bool successAnswer = Model.CorrectAnswersIndexesHashSet != null ? Model.CorrectAnswersIndexesHashSet.Contains(i.ToString()) : false;
+                            string badgeStatus = i == Model.SentenceIndex ?
+                                successAnswer ? "badge-success" : "badge-warning" :
+                                successAnswer ? "badge-success" : "badge-secondary";
+
+                            <span class="spanRow @((i % 2 == 0) ? "divEvenColor" : "")">
+                                <span class="spanColWithoutBorder vAlignMiddle">
+                                    <span class="badge @badgeStatus">@(i + 1)</span>
+                                </span>
+                                <span class="spanColWithoutBorder">
+                                    <form asp-action="PracticeSync" asp-controller="Projects" method="post">
+                                        <input id="TopicId_@i" name="TopicId" type="hidden" value="@Model.TopicId" />
+                                        <input id="SentenceIndex_@i" name="SentenceIndex" type="hidden" value="@i" />
+                                        <input id="HowToDisplay_@i" name="HowToDisplay" type="hidden" value="@Model.HowToDisplay" />
+                                        <input id="CorrectAnswerIndexes_@i" name="CorrectAnswerIndexes" type="hidden" value="@Model.CorrectAnswerIndexes" />
+                                        <input id="ReturnUrl_@i" name="ReturnUrl" type="hidden" value="@Model.ReturnUrl" />
+
+                                        <button type="submit" class="btn btn-sm btn-link">
+                                            @if (!Model.SourceText.ElementAt(i).Breaking)
+                                            {
+                                                @($"{Model.SourceText.ElementAt(i).Sentence} ");
+                                            }
+                                            else
+                                            {
+                                                if (i < sentCount - 1)
+                                                {
+                                                    @Model.SourceText.ElementAt(i).Sentence;
+                                                    @Html.Raw("</button>")
+                                                    @Html.Raw("</form>")
+                                                    @Html.Raw("</span>")
+                                                    @Html.Raw("<span class='spanColWithoutBorder'>")
+                                                    @Html.Raw("<form asp-action='PracticeSync' asp-controller='Projects' method='post'>")
+                                                    @Html.Raw("<button type='submit' class='btn btn-sm btn-link'>")
+                                                }
+                                                else
+                                                {
+                                                    @Model.SourceText.ElementAt(i).Sentence;
+                                                }
+                                            }
+                                        </button>
+
+                                        @if (Model.SentenceIndex != null && i == (int)Model.SentenceIndex && !successAnswer)
+                                        {
+                                            <div class="input-group input-group-sm mr-1 mb-1">
+                                                <input id="Answer_@i" name="Answer" type="text" class="form-control form-control-sm" autofocus aria-describedby="button-addon2" value="@Model.Answer" />
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-sm btn-outline-secondary" type="submit" id="button-addon2">@SharedLocalizer["Go"]</button>
+                                                </div>
+                                            </div>
+                                            <span class="">@Html.Raw(Model.ResponseText)</span>
+                                        }
+
+                                        @if (successAnswer)
+                                        {
+                                            <br /><span class="pl-2">@Model.TargetText.ElementAt(i).Sentence</span>
+                                        }
+                                    </form>
+                                </span>
+                            </span>
+                        }
+                    }
+                </span>
+            </span>
+        </div>
+    </div>
+}
+else
+{
+    <h5>@SharedLocalizer["NoProjects"]</h5>
+}

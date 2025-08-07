@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace RememberText.ViewModels
 {
     public class TopicFieldViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Title is required.")]
         [StringLength(256)]
         public string TopicTitle { get; set; }
         [Required]
@@ -17,5 +13,8 @@ namespace RememberText.ViewModels
         [StringLength(50)]
         public string TargetLang { get; set; }
         public int NumberOfLines { get; set; }
+        public int AgeLimitation { get; set; }
+        public int? CopyrightId { get; set; }
+        public string CopyrightName { get; set; } 
     }
 }

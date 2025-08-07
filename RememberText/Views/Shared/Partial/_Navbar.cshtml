@@ -1,12 +1,24 @@
-﻿<ul class="navbar-nav mr-auto">
-    <li class="nav-item"><a class="nav-link text-info" href="@Url.Action("Contact", "Home")"><i class="far fa-envelope" aria-hidden="true"></i> Contact</a></li>
-    <li class="nav-item"><a class="nav-link text-success" href="@Url.Action("Index", "PayPal")"><i class="far fa-money-bill-alt"></i> Donate</a></li>
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> Localizer 
+
+<ul class="navbar-nav mr-auto">
+    @*<li class="nav-item"><a class="nav-link text-info" href="@Url.Action("Contact", "Home")"><i class="far fa-envelope" aria-hidden="true"></i> @Localizer["Contact"]</a></li>*@
+    <li class="nav-item">
+        <a asp-action="Message" asp-controller="Home" class="nav-link text-info">
+            <i class="far fa-envelope" aria-hidden="true"></i> @Localizer["Contact"].Value
+        </a>
+    </li>
+    <li class="nav-item"><a class="nav-link text-success" href="@Url.Action("Donate", "Home")"><i class="far fa-money-bill-alt"></i> @Localizer["Donate"].Value</a></li>
     <li class="nav-item dropdown">
-        <a id="aboutDropdown" class="nav-link dropdown-toggle text-info" data-toggle="dropdown" href="@Url.Action("About", "Home")" aria-haspopup="true" aria-expanded="false"><i class="fas fa-info-circle" aria-hidden="true"></i>&nbsp; Info</a>
+        <a id="aboutDropdown" class="nav-link dropdown-toggle text-info" data-toggle="dropdown" href="@Url.Action("About", "Home")" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-info-circle" aria-hidden="true"></i>&nbsp;@Localizer["Info"].Value
+        </a>
         <div class="dropdown-menu" aria-labelledby="aboutDropdown">
-            <a class="dropdown-item" href="@Url.Action("About", "Home")"><i class="far fa-question-circle" aria-hidden="true"></i>&nbsp; Why</a>
-            <a class="dropdown-item" href="@Url.Action("How", "Home")"><i class="far fa-question-circle" aria-hidden="true"></i>&nbsp; How</a>
-            <a class="dropdown-item" href="@Url.Action("Introduction", "Home")"><i class="far fa-handshake" aria-hidden="true"></i>&nbsp; Introduction</a>
+            <a class="dropdown-item" href="@Url.Action("Why", "Home")"><i class="far fa-question-circle" aria-hidden="true"></i>&nbsp;@Localizer["Why"].Value</a>
+            <a class="dropdown-item" href="@Url.Action("How", "Home")"><i class="far fa-question-circle" aria-hidden="true"></i>&nbsp;@Localizer["How"].Value</a>
+            <a class="dropdown-item" href="@Url.Action("Introduction", "Home")"><i class="far fa-handshake" aria-hidden="true"></i>&nbsp;@Localizer["Introduction"].Value</a>
         </div>
     </li>
 </ul>
+
+<vc:language-select-lists field-name="SelectLanguage"></vc:language-select-lists>

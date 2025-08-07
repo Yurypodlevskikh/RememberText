@@ -1,0 +1,62 @@
+﻿@model RememberText.ViewModels.ProjectTextViewModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+<div id="dialog_header" class="modal-header align-items-center p-2">
+
+    @if (string.IsNullOrEmpty(Model.TargetLang))
+    {
+        <button class="btn btn-light">
+            <div class="fflag fflag-@Model.SourceLang.Split('-').Last() ff-lg ff-lt ff-wave"></div>
+        </button>
+    }
+    else
+    {
+        <a asp-action="ProjectText" asp-controller="Projects" asp-route-Id="@Model.TopicId" asp-route-HowToDisplay="general" class="how-to-display btn btn-light @(Model.HowToDisplay == "general" ? "active" : "")">
+            <div class="fflag fflag-@Model.SourceLang.Split('-').Last() ff-lg ff-lt ff-wave"></div>
+            <text> ↣ </text>
+            <div class="fflag fflag-@Model.TargetLang.Split('-').Last() ff-lg ff-lt ff-wave"></div>
+        </a>
+        <a asp-action="ProjectText" asp-controller="Projects" asp-route-Id="@Model.TopicId" asp-route-HowToDisplay="source" class="how-to-display btn btn-light @(Model.HowToDisplay == "source" ? "active" : "")">
+            <div class="fflag fflag-@Model.SourceLang.Split('-').Last() ff-lg ff-lt ff-wave"></div>
+        </a>
+        <a asp-action="ProjectText" asp-controller="Projects" asp-route-Id="@Model.TopicId" asp-route-HowToDisplay="target" class="how-to-display btn btn-light @(Model.HowToDisplay == "target" ? "active" : "")">
+            <div class="fflag fflag-@Model.TargetLang.Split('-').Last() ff-lg ff-lt ff-wave"></div>
+        </a>
+    }
+
+    <button type="button" class="close p-2 my-0 ml-0 mr-1" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="text-in-modal">
+        <p class="bg-success text-white p-2">
+            <strong>@Model.TopicTitle</strong>
+        </p>
+
+        <div id="dialog_body">
+            @if (Model.HowToDisplay == "source" || string.IsNullOrEmpty(Model.TargetLang))
+            {
+                <partial name="Partial/_SourceOrTargetDisplay" for="@Model.SourceText" />
+            }
+            else if (Model.HowToDisplay == "target")
+            {
+                <partial name="Partial/_SourceOrTargetDisplay" for="@Model.TargetText" />
+            }
+            else
+            {
+                <partial name="Partial/_SourceAndTargetDisplay" for="@Model" />
+            }
+        </div>
+    </div>
+</div>
+@if (!string.IsNullOrEmpty(Model.CopyrightName))
+{
+    <div class="modal-footer">
+        <div>
+            <i class="far fa-copyright"></i>&nbsp;@Model.CopyrightName
+        </div>
+    </div>
+}

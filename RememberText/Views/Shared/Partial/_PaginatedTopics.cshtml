@@ -1,0 +1,46 @@
+﻿@model RememberText.ViewModels.PaginatedTopics
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{ 
+    string prevDisabled = !Model.PLTopics.HasPreviousPage ? "disabled" : "";
+    string nextDisabled = !Model.PLTopics.HasNextPage ? "disabled" : "";
+}
+
+<nav aria-label="Topic page navigation">
+    <ul class="pagination mb-0">
+        <li class="page-item @prevDisabled">
+            <a asp-controller="Projects" asp-action="Topics"
+               asp-route-viewMode="UserTopics" asp-route-sortOrder="@Model.SortOrder"
+               asp-route-SearchTitle="@Model.SearchTitle" asp-route-pageNumber="@(string.IsNullOrEmpty(prevDisabled) ? Model.PageNumber - 1 : Model.PageNumber)"
+               class="page-link" title="@Model.SearchTitle" data-toggle="tooltip">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li class="page-item @nextDisabled">
+            <a asp-controller="Projects" asp-action="Topics"
+               asp-route-viewMode="UserTopics" asp-route-sortOrder="@Model.SortOrder"
+               asp-route-SearchTitle="@Model.SearchTitle" asp-route-pageNumber="@(string.IsNullOrEmpty(nextDisabled) ? Model.PageNumber + 1 : Model.PageNumber)"
+               class="page-link" title="@Model.SearchTitle" data-toggle="tooltip">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        <li class="page-item overflow-auto">
+            <ul class="pagination">
+                @for (int y = 1; y <= Model.PLTopics.TotalPages; y++)
+                {
+                    <li class="page-item@(Model.PLTopics.PageIndex == y ? " active" : "")">
+                        <a asp-controller="Projects" asp-action="Topics"
+                           asp-route-viewMode="@Model.ViewMode" asp-route-sortOrder="@Model.SortOrder"
+                           asp-route-SearchTitle="@Model.SearchTitle" asp-route-pageNumber="@y"
+                           class="page-link">
+                            @y
+                        </a>
+                    </li>
+                }
+            </ul>
+        </li>
+
+
+    </ul>
+</nav> 

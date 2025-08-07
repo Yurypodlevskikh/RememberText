@@ -1,4 +1,6 @@
 ﻿@model RememberText.ViewModels.PreferredLangViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> Localizer
 
 @if (Model != null && (Model.PrefLangs != null && Model.PrefLangs.Count() > 0))
 {
@@ -8,14 +10,14 @@
                 <div class="card-header">
                     @if (string.IsNullOrEmpty(Model.SourceLang))
                     {
-                        <h5>Choose Main Language</h5>
-                        <small>Creating Single Text</small>
+                        <h5>@Localizer["ChooseSourceLanguage"].Value</h5>
+                        <small>@Localizer["CreatingPrimaryText"].Value</small>
                     }
                     else
                     {
-                        <h5>Choose Target Language</h5>
+                        <h5>@Localizer["ChooseTargetLanguage"].Value</h5>
                         <p class="h5"><span class="badge badge-info">@Model.SourceLang</span> <i class="far fa-arrow-alt-circle-right"></i> ...</p>
-                        <small>Creating Paired Text</small>
+                        <small>@Localizer["CreatingSecondaryText"].Value</small>
                     }
                 </div>
                 <ul id="choose_text_type" class="list-group">

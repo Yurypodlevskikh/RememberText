@@ -1,12 +1,15 @@
-﻿<li class="nav-item">
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+<li class="nav-item">
     <a class="nav-link text-success" asp-area="Identity"
-       asp-page="/Account/Register" id="registerLink" title="Register" data-toggle="tooltip">
+       asp-page="/Account/Register" id="registerLink" title="@Localizer["Register"]" data-toggle="tooltip">
         <i class="fas fa-user-plus" aria-hidden="true"></i>
     </a>
 </li>
 <li class="nav-item">
     <a class="nav-link text-success" asp-area="Identity"
-       asp-page="/Account/Login" id="loginLink" title="Log In" data-toggle="tooltip">
+       asp-page="/Account/Login" id="loginLink" title="@Localizer["LogIn"]" data-toggle="tooltip">
         <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
     </a>
 </li>

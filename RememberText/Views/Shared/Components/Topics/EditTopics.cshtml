@@ -1,0 +1,201 @@
+﻿@model RememberText.ViewModels.TopicsAndParamViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
+
+@if (Model.Topics.PLTopics != null && Model.Topics.PLTopics.Count() > 0)
+{
+    <table id="project_topics" class="table table-sm table-bordered table-striped table-hover" style="min-width:800px;">
+        <thead class="thead-light">
+            <tr>
+                <th class="text-center align-middle">
+                    №
+                </th>
+                <th class="text-center align-middle">
+                    <a asp-controller="Projects" asp-action="Topics" asp-route-ViewMode="@Model.Topics.ViewMode"
+                       asp-route-SortOrder="@Model.TopicSortParam.TitleSortParam" asp-route-PageNumber="@Model.Topics.PageNumber"
+                       asp-route-TagParam="@Model.Topics.TagParam" asp-route-SearchTitle="@Model.Topics.SearchTitle">
+                        @SharedLocalizer["Title"].Value
+                    </a>
+                    <i class="fas fa-sort"></i>
+                </th>
+                <th class="text-center align-middle">
+                    <a asp-controller="Projects" asp-action="Topics" asp-route-ViewMode="@Model.Topics.ViewMode"
+                       asp-route-SortOrder="@Model.TopicSortParam.PublicSortParam" asp-route-PageNumber="@Model.Topics.PageNumber"
+                       asp-route-TagParam="@Model.Topics.TagParam" asp-route-SearchTitle="@Model.Topics.SearchTitle" 
+                       title="@SharedLocalizer["Publish"].Value" data-toggle="tooltip">
+                       <i class="fas fa-bullhorn"></i>
+                    </a>
+                    <i class="fas fa-sort"></i>
+                </th>
+                <th class="text-center align-middle" colspan="2">
+                    <a asp-controller="Projects" asp-action="Topics" asp-route-ViewMode="@Model.Topics.ViewMode"
+                       asp-route-SortOrder="@Model.TopicSortParam.SourceSortParam" asp-route-PageNumber="@Model.Topics.PageNumber"
+                       asp-route-TagParam="@Model.Topics.TagParam" asp-route-SearchTitle="@Model.Topics.SearchTitle"
+                       title="@SharedLocalizer["Source"].Value" data-toggle="tooltip">
+                        <i class="fas fa-home"></i>
+                    </a>
+                    <i class="fas fa-sort"></i>
+                    &nbsp;@SharedLocalizer["Edit"].Value&nbsp;
+                    <a asp-controller="Projects" asp-action="Topics" asp-route-ViewMode="@Model.Topics.ViewMode"
+                       asp-route-SortOrder="@Model.TopicSortParam.TargetSortParam" asp-route-PageNumber="@Model.Topics.PageNumber"
+                       asp-route-TagParam="@Model.Topics.TagParam" asp-route-SearchTitle="@Model.Topics.SearchTitle"
+                       title="@SharedLocalizer["Target"].Value" data-toggle="tooltip">
+                        <i class="fas fa-bullseye"></i>
+                    </a>
+                    <i class="fas fa-sort"></i>
+                </th>
+                <th class="text-center align-middle">
+                    Both
+                </th>
+                <th class="text-center align-middle">
+                    <a asp-controller="Projects" asp-action="Topics" asp-route-ViewMode="@Model.Topics.ViewMode"
+                       asp-route-SortOrder="@Model.TopicSortParam.CreatedSortParam" asp-route-PageNumber="@Model.Topics.PageNumber"
+                       asp-route-TagParam="@Model.Topics.TagParam" asp-route-SearchTitle="@Model.Topics.SearchTitle">
+                        @SharedLocalizer["Created"].Value
+                    </a>
+                    <i class="fas fa-sort"></i>
+                </th>
+                <th class="text-center align-middle">
+                    <a asp-controller="Projects" asp-action="Topics" asp-route-ViewMode="@Model.Topics.ViewMode"
+                       asp-route-SortOrder="@Model.TopicSortParam.UpdatedSortParam" asp-route-PageNumber="@Model.Topics.PageNumber"
+                       asp-route-TagParam="@Model.Topics.TagParam" asp-route-SearchTitle="@Model.Topics.SearchTitle">
+                        @SharedLocalizer["Updated"].Value
+                    </a>
+                    <i class="fas fa-sort"></i>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int i = 1;
+                foreach (var item in Model.Topics.PLTopics)
+                {
+                    <tr>
+                        <td>
+                            <text class="@(item.PublicText == true ? (item.BanProject ? "text-danger" : "text-success") : item.BanProject ? "text-danger" : "")">
+                                @i
+                            </text>
+                        </td>
+                        <td class="text-truncate">
+                            <a asp-action="ProjectText" asp-controller="Projects" asp-route-Id="@item.TopicId" class="show-project-text">@item.TopicTitle</a>
+                        </td>
+                        <td class="text-center align-middle">
+                            <a asp-action="PublishProject" asp-controller="Projects" asp-route-id="@item.TopicId" asp-route-viewMode="EditTopics" class="publish-project@(item.PublicText == true ? " text-success" : "")">
+                                @if (item.BanProject)
+                                {
+                                    <i class="fas fa-ban"></i>
+                                }
+                                else
+                                {
+                                    <i class="fas fa-bullhorn"></i>
+                                }
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <a asp-action="EditProject" asp-controller="Projects" asp-route-id="@item.TopicId" asp-route-WhatToEdit="source" title="@SharedLocalizer["Edit"].Value">
+                                <span class="small text-dark">
+                                    <i class="fas fa-edit"></i>
+                                </span>
+                                @if(!string.IsNullOrEmpty(item.SourceBasicFlag))
+                                {
+                                    <div class="fflag fflag-@item.SourceBasicFlag ff-sm ff-lt ff-wave"></div>
+                                    <div class="fflag fflag-@item.SourceFlag ff-sm ff-lt ff-wave"></div>
+                                }
+                                else
+                                {
+                                    <div class="fflag fflag-@item.SourceFlag ff-sm ff-lt ff-wave"></div>
+                                }
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            @if (!string.IsNullOrEmpty(item.TargetLang))
+                            {
+                                <a asp-action="EditProject" asp-controller="Projects" asp-route-id="@item.TopicId" asp-route-WhatToEdit="target" title="@SharedLocalizer["Edit"].Value">
+                                    <span class="small text-dark">
+                                        <i class="fas fa-edit"></i>
+                                    </span>
+                                    @if (!string.IsNullOrEmpty(item.TargetBasicFlag))
+                                    {
+                                        <div class="fflag fflag-@item.TargetBasicFlag ff-sm ff-lt ff-wave"></div>
+                                        <div class="fflag fflag-@item.TargetFlag ff-sm ff-lt ff-wave"></div>
+                                    }
+                                    else
+                                    {
+                                        <div class="fflag fflag-@item.TargetFlag ff-sm ff-lt ff-wave"></div>
+                                    }
+                                </a>
+                            }
+                            else
+                            {
+                                @:-
+                            }
+                        </td>
+                        <td class="text-center">
+                            @if (!string.IsNullOrEmpty(item.TargetLang))
+                            {
+                                <a asp-action="EditProject" asp-controller="Projects" asp-route-id="@item.TopicId" title="@SharedLocalizer["Edit"].Value" data-toggle="tooltip" class="text-dark">
+                                    <span class="small">
+                                        <i class="fas fa-edit"></i>
+                                    </span>
+                                    @if (!string.IsNullOrEmpty(item.SourceBasicFlag))
+                                    {
+                                        <div class="fflag fflag-@item.SourceBasicFlag ff-sm ff-lt ff-wave"></div>
+                                        <div class="fflag fflag-@item.SourceFlag ff-sm ff-lt ff-wave"></div>
+                                    }
+                                    else
+                                    {
+                                        <div class="fflag fflag-@item.SourceFlag ff-sm ff-lt ff-wave"></div>
+                                    }
+                                    @if (!string.IsNullOrEmpty(item.TargetLang))
+                                    {
+                                        @: &#38;
+                                        @if (!string.IsNullOrEmpty(item.TargetBasicFlag))
+                                        {
+                                            <div class="fflag fflag-@item.TargetBasicFlag ff-sm ff-lt ff-wave"></div>
+                                            <div class="fflag fflag-@item.TargetFlag ff-sm ff-lt ff-wave"></div>
+                                        }
+                                        else
+                                        {
+                                            <div class="fflag fflag-@item.TargetFlag ff-sm ff-lt ff-wave"></div>
+                                        }
+                                    }
+                                </a>
+                            }
+                            else
+                            {
+                                @:-
+                            }
+                        </td>
+                        <td class="text-center align-middle">
+                            <span title="@item.CreatedDateTime.ToString("T")" data-toggle="tooltip">@item.CreatedDateTime.ToString("d")</span>
+                        </td>
+                        <td class="text-center align-middle">
+                            @if (item.UpdatedDateTime != null)
+                            {
+                                <span title="@string.Format("{0:T}", item.UpdatedDateTime)" data-toggle="tooltip">@string.Format("{0:d}", item.UpdatedDateTime)</span>
+                            }
+                        </td>
+                        <td class="text-center align-middle">
+                            <a asp-controller="Projects" asp-action="Delete" asp-route-id="@item.TopicId" class="text-danger" title="@SharedLocalizer["Delete"].Value" data-toggle="tooltip">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+
+                    i++;
+                }
+            }
+        </tbody>
+    </table>
+
+    <partial name="Partial/_PaginatedTopics" model="@Model.Topics" />
+}
+else
+{
+    <h5>@SharedLocalizer["NoProjects"]</h5>
+}
+
+<partial name="Partial/_DisplayTextModal" />
+
+

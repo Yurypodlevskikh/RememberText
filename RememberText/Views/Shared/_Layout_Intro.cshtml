@@ -11,14 +11,16 @@
 
 </head>
 <body>
-    <nav id="RT_Nav_Intro" class="navbar fixed-top navbar-expand-sm navbar-light">
-        <div class="container">
+    <a id="RT_Brand" href="@Url.Action("Index", "Home")" class="navbar-brand align-top">
+        <span id="logo_box_intro" class="custom-success">
+            <span id="logo_character" class="rt-logo-character">R</span>
+        </span>
+    </a>
 
-            <a id="RT_Brand" href="@Url.Action("Index", "Home")" class="navbar-brand align-top">
-                <span id="Logo_box_Intro" class="custom-success">
-                    <span id="logo-letter" class="rt-logo-letter">R</span>
-                </span>
-            </a>
+    <partial name="Partial/_CookieConsentPartial" />
+
+    <nav id="RT_Nav_Intro" class="navbar fixed-top navbar-expand-sm navbar-light shadow-none">
+        <div class="container">
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#RT_navbar_Intro" aria-controls="RT_navbar_Intro" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -30,12 +32,16 @@
             </div>
         </div>
 
-        <div id="Green_Line_Intro" class="line-success"></div>
+        <div id="logo_line_intro" class="line-success"></div>
     </nav>
+
+    @await RenderSectionAsync("SidebarMenu", required: false)
 
     <div id="container-content" class="container">
 
         @RenderBody()
+
+        <partial name="Partial/_DisplayTextModal" />
 
         <partial name="Partial/_Footer" />
 
@@ -43,12 +49,13 @@
 
     <partial name="Partial/_MainScripts" />
 
+    @await RenderSectionAsync("Scripts", required: false)
+
     <environment include="Development">
         <script src="~/js/introduction.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
         <script src="~/js/introduction.min.js" asp-append-version="true"></script>
     </environment>
-
 </body>
 </html>

@@ -1,4 +1,6 @@
 ﻿@model RememberText.ViewModels.PreferredLangViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> Localizer
 
 @if (Model != null && (Model.PrefLangs != null && Model.PrefLangs.Count() > 0))
 {
@@ -6,8 +8,8 @@
         <div class="col-md-4">
             <div class="card">
                 <div class="card-header">
-                    <h5>Choose Source Language</h5>
-                    <small>Creating Paired Text</small>
+                    <h5>@Localizer["ChooseSourceLanguage"].Value</h5>
+                    <small>@Localizer["CreatingPrimaryText"].Value</small>
                 </div>
                 <ul id="choose_text_type" class="list-group">
                     @foreach (var lang in Model.PrefLangs)

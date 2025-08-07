@@ -17,6 +17,10 @@ namespace RememberText.Domain.Entities.Identity
         public int LimitOfText { get; set; }
         [Required]
         public int YearOfBirth { get; set; }
+        public virtual ICollection<GuestBookEntry> GuestBookEntries { get; set; }
+        public virtual ICollection<Topic> Topics { get; set; }
+        public virtual ICollection<IpAddress> IpAddresses { get; set; }
+        
 
         public const string RTGenAdministrator = "GenAdministrator";
         public const string RTAdministrator = "Administrators";

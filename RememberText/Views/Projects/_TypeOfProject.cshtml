@@ -1,21 +1,24 @@
-﻿<div class="row">
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> Localizer
+
+<div class="row">
     <div class="col-md-6">
         <div class="card">
             <div class="card-header">
-                <h5>Choose Type of Project</h5>
+                <h5>@Localizer["ChooseTypeOfProject"].Value</h5>
             </div>
             <ul id="choose_text_type" class="list-group text-center">
                 <li class="list-group-item">
                     <a asp-action="CreateSingleText" asp-controller="Projects" class="create-project btn btn-success btn-block">
-                        <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;Single Text
+                        <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;@Localizer["SingleText"].Value
                     </a>
-                    <span class="small">Creates the main text, without a secondary text (translation, correct answer, etc.).</span>
+                    <span class="small">@Localizer["PrimaryTextNoSecondary"].Value</span>
                 </li>
                 <li class="list-group-item">
                     <a asp-action="DefineSourceLang" asp-controller="Projects" class="create-project btn btn-success btn-block">
-                        <i class="fa fa-files-o" aria-hidden="true"></i>&nbsp;Paired Text
+                        <i class="fa fa-files-o" aria-hidden="true"></i>&nbsp;@Localizer["PairedTexts"].Value
                     </a>
-                    <span class="small">Creates main and secondary text (translation, correct answer, etc.).</span>
+                    <span class="small">@Localizer["PrimaryTextAndSecondary"].Value</span>
                 </li>
             </ul>
         </div>
@@ -23,5 +26,8 @@
 </div>
 
 <p class="mt-3">
-    <a asp-action="Index" asp-controller="Projects" class="btn btn-warning" title="To All My Projects"><i class="fas fa-ban"></i>&nbsp;Cancel</a>
+    <a asp-action="Topics" asp-controller="Projects" asp-route-viewMode="UserTopics" class="btn btn-warning" title="To All My Projects">
+        <i class="fas fa-ban"></i>
+        &nbsp;@Localizer["Cancel"].Value
+    </a>
 </p>

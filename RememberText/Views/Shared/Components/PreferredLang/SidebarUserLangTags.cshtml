@@ -1,0 +1,46 @@
+﻿@model List<RememberText.ViewModels.SidebarBaseLangTagsViewModel>
+
+@if (Model != null && Model.Count() > 0)
+{
+    int i = 0;
+    <div class="accordion" id="accordion-tag-sidebar">
+        @foreach (var lang in Model)
+        {
+            string collapsShow = "collapse";
+            if (i == 0)
+            {
+                collapsShow += " show";
+            }
+            <div class="card">
+                <div class="card-header" id="heading-@lang.BaseLangCode">
+                    <div class="h4 mb-0">
+                        <button class="btn btn-sm btn-success @(i > 0 ? "collapsed" : "")"
+                        data-toggle="collapse" data-target="#collapse-@lang.BaseLangCode"
+                        aria-expanded="false" aria-controls="collapse-@lang.BaseLangCode"
+                        title="@lang.BaseLangName">
+                            @lang.BaseLangName
+                            <span class="badge badge-light">@lang.NumberOfAllTags</span>
+                        </button>
+                    </div>
+                </div>
+                <div id="collapse-@lang.BaseLangCode" class="@collapsShow"
+             aria-labelledby="heading-@lang.BaseLangCode"
+             data-parent="#accordion-tag-sidebar">
+                    <div class="card-body p-2">
+                        @if (lang.BaseTags != null && lang.BaseTags.Count() > 0)
+                        {
+                            foreach (var tag in lang.BaseTags)
+                            {
+                                <a asp-controller="Projects" asp-action="Topics" asp-route-viewMode="TagTopics" asp-route-tagParam="@(lang.BaseLangCode+"_"+tag.Id)" class="badge badge-light">
+                                    @tag.TagName
+                                    <small class="badge badge-secondary">@tag.TaggedTopics</small>
+                                </a>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            i++;
+        }
+    </div>
+}

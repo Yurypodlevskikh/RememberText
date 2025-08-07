@@ -1,13 +1,22 @@
 ﻿/*---- Simple keyframes START ----*/
 @keyframes Fade-alert-out {
     0% {
+        margin-top: -10%;
+    }
+
+    20% {
+        margin-top: 0;
+    }
+
+    50% {
         margin-top: 0;
     }
 
     100% {
-        margin-top: -25%;
+        margin-top: -10%;
     }
 }
+
   @keyframes Fade-in {
     0% {opacity: 0;}
     100% {opacity: 1;}

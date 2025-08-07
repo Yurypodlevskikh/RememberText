@@ -1,4 +1,6 @@
 ﻿@model RememberText.ViewModels.TopicFieldViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
 
 <div class="row">
     <div class="col-md-12">
@@ -20,7 +22,7 @@
 
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">Title</span>
+                            <span class="input-group-text">@SharedLocalizer["Title"].Value</span>
                         </div>
                         <input asp-for="TopicTitle" class="form-control" />
                     </div>
@@ -28,16 +30,34 @@
                     <div class="form-row">
                         <div class="input-group col-md-3 mt-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">Number of Rows</span>
+                                <span class="input-group-text">@SharedLocalizer["NumberOfRows"].Value</span>
                             </div>
                             <input asp-for="NumberOfLines" class="form-control" />
+                            <span asp-validation-for="NumberOfLines" class="text-danger"></span>
                         </div>
-                        <span asp-validation-for="NumberOfLines" class="text-danger"></span>
+                        <div class="input-group col-md-3 mt-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">@SharedLocalizer["AgeRating"].Value</span>
+                            </div>
+                            <select asp-for="AgeLimitation" class="custom-select">
+                                @for (int i = 0; i < 19; i++)
+                                {
+                                    string select = string.Empty;
+                                    if (i == 0)
+                                    {
+                                        <option value="@i" selected>@i+</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@i">@i+</option>
+                                    }
+                                }
+                            </select>
+                        </div>
                     </div>
-
                     <div class="form-row">
                         <div class="form-group col-md-3 mt-3">
-                            <input type="submit" value="Create" class="btn btn-success btn-block" />
+                            <input type="submit" value="@SharedLocalizer["Create"].Value" class="btn btn-success btn-block" />
                         </div>
                     </div>
                 </form>
@@ -49,7 +69,7 @@
 <div class="mt-3">
     @if (!string.IsNullOrEmpty(Model.TargetLang))
     {
-        <a asp-action="DefineTargetLang" asp-controller="Projects" asp-route-langCode="@Model.SourceLang" class="create-project btn btn-warning" title="">
+        <a asp-action="Create" asp-controller="Projects" asp-route-langCode="@Model.SourceLang" class="create-project btn btn-warning" title="">
             <i class="fas fa-undo-alt"></i>&nbsp;Back
         </a>
     }
@@ -59,6 +79,6 @@
             <i class="fas fa-undo-alt"></i>&nbsp;Back
         </a>
     }
-    <a asp-action="Index" asp-controller="Projects" class="btn btn-warning"><i class="fas fa-ban"></i>&nbsp;Cancel</a>
+    <a asp-action="Topics" asp-controller="Projects" asp-route-viewMode="UserTopics" class="btn btn-warning"><i class="fas fa-ban"></i>&nbsp;Cancel</a>
 </div>
 

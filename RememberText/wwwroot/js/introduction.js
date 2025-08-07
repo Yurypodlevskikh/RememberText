@@ -5,12 +5,13 @@
     var addclass = function () {
         requestAnimationFrame(function () {
             $(".navbar-toggler").addClass("rt-show");
-            $("#Logo_box_Intro").addClass("rt-show");
+            $("#logo_box_intro").addClass("rt-show");
             $("#RT_Nav_Intro").addClass("rt-show");
-            $("#Green_Line_Intro").addClass("rt-show");
+            $("#logo_line_intro").addClass("rt-show");
             $("#Introduction").slideUp(2000);
             $("#Hide_Intro_Box").fadeOut(1000);
             $("#RT_navbar_Intro").addClass("rt-show");
+            $("label.rt-nav-toggle").addClass("rt-show");
             $("#ProjectsBox").addClass("rt-show");
             $("#RT_Footer").addClass("rt-show");
         });
@@ -35,7 +36,7 @@
         var btn = like.prev();
         var allLikes = like.text();
         $.post(url, data, function (response) {
-            if (response.Success == true) {
+            if (response.Success === true) {
                 if (response.SuccessMessage !== undefined || response.SuccessMessage !== "") {
                     if (response.SuccessMessage > 0) {
                         if (btn.hasClass("btnlink-primary")) {

@@ -1,0 +1,52 @@
+﻿@model RememberText.ViewModels.ProjectTextViewModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["DisplayProjectText"];
+}
+
+<div class="btn-group" role="group" aria-label="How to display the project text">
+
+    @if (string.IsNullOrEmpty(Model.TargetLang))
+    {
+        <button class="btn btn-success" disabled>
+            @Model.SourceLang
+        </button>
+    }
+    else
+    {
+        <a asp-action="ProjectText" asp-controller="Home" asp-route-Id="@Model.TopicId" asp-route-HowToDisplay="general" class="btn btn-success @(Model.HowToDisplay == "general" ? "active" : "")">
+            @Model.SourceLang
+            <text> & </text>
+            @Model.TargetLang
+        </a>
+        <a asp-action="ProjectText" asp-controller="Home" asp-route-Id="@Model.TopicId" asp-route-HowToDisplay="source" class="btn btn-primary @(Model.HowToDisplay == "source" ? "active" : "")">
+            @Model.SourceLang
+        </a>
+        <a asp-action="ProjectText" asp-controller="Home" asp-route-Id="@Model.TopicId" asp-route-HowToDisplay="target" class="btn btn-secondary @(Model.HowToDisplay == "target" ? "active" : "")">
+            @Model.TargetLang
+        </a>
+    }
+
+</div>
+
+<div class="text-in-modal mt-3">
+    <p class="bg-success text-white">
+        <strong>@Model.TopicTitle</strong>
+    </p>
+
+    @if (Model.HowToDisplay == "source" || string.IsNullOrEmpty(Model.TargetLang))
+    {
+        <partial name="Partial/_SourceOrTargetDisplay" for="@Model.SourceText" />
+    }
+    else if (Model.HowToDisplay == "target")
+    {
+        <partial name="Partial/_SourceOrTargetDisplay" for="@Model.TargetText" />
+    }
+    else
+    {
+        <partial name="Partial/_SourceAndTargetDisplay" for="@Model" />
+    }
+</div>

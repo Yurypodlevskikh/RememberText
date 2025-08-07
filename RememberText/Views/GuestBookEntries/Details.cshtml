@@ -1,0 +1,46 @@
+﻿@model RememberText.ViewModels.GuestBookDetailsViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> Localizer
+
+
+@{
+    ViewData["Title"] = Localizer["Details"].Value;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4>@Localizer["Details"].Value</h4>
+<hr />
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SenderNickname)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SenderNickname)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MessageTitle)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MessageTitle)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Message)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Message)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CreatedDateTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CreatedDateTime)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index" class="btn btn-sm btn-primary">
+        <i class="fas fa-undo-alt"></i> @Localizer["Back"].Value
+    </a>
+</div>

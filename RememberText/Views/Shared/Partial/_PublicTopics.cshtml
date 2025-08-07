@@ -1,0 +1,33 @@
+﻿@model RememberText.ViewModels.TopicFiltersViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> Localizer
+
+
+<div class="d-flex flex-row mb-1">
+    <div class="pr-2">
+        <h4 class="">
+            <a href="/">
+                <i class="fas fa-home"></i>
+            </a>
+            @Localizer["Projects"].Value
+        </h4>
+    </div>
+    <div class="">
+        <form asp-controller="Home" asp-action="Index"
+              asp-route-viewMode="@Model.ViewMode" asp-route-sortOrder="@Model.SortOrder" asp-route-pageNumber="@Model.PageNumber"
+              asp-route-tagParam="@Model.TagParam" asp-route-SearchTitle="" method="get">
+            <div class="input-group input-group-sm">
+                <input type="text" name="SearchTitle" class="form-control" placeholder="@Localizer["FindByTitle"].Value" value="@Model.SearchTitle">
+                <div class="input-group-append">
+                    <button class="btn btn-sm btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <vc:topics shown-for="@Model.ViewMode" sort-param="@Model.SortOrder" page-number="@Model.PageNumber" tag-param="@Model.TagParam" search-title="@Model.SearchTitle"></vc:topics>
+    </div>
+</div>

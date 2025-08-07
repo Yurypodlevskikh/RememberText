@@ -1,0 +1,11 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using RememberText.Domain.Entities.Identity
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <div id="SpaceProgressBar">
+        <vc:space-progress-bar></vc:space-progress-bar>
+    </div>
+}

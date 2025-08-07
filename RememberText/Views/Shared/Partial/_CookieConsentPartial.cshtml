@@ -1,0 +1,40 @@
+﻿@using Microsoft.AspNetCore.Http.Features
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> Localizer
+
+@{
+    var consentFeature = Context.Features.Get<ITrackingConsentFeature>();
+    var showBanner = !consentFeature?.CanTrack ?? false;
+    var cookieString = consentFeature?.CreateConsentCookie();
+}
+
+@if (showBanner)
+{
+    <div id="cookieConsent" class="alert alert-info alert-dismissible fade show text-right fixed-bottom" role="alert">
+        <div class="row">
+            <div class="col-md-7 col-lg-8 text-center pb-2 pb-md-0 pb-lg-0">
+                @Localizer["SiteCookies"].Value
+            </div>
+            <div class="col-md-5 col-lg-4 text-center d-flex align-items-center justify-content-around">
+                <button type="button" class="btn btn-sm btn-success" data-dismiss="alert" aria-label="Close" data-cookie-string="@cookieString">
+                    @Localizer["AcceptCookies"].Value
+                </button>
+                <a asp-controller="Home" asp-action="Privacy" class="btn btn-sm btn-info">
+                    @Localizer["LearnMore"].Value
+                </a>
+                <button type="button" class="btn btn-sm btn-warning" data-dismiss="alert" aria-label="Close">
+                    @Localizer["RejectCookies"].Value
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function(){
+            var button = document.querySelector("#cookieConsent button[data-cookie-string]");
+            button.addEventListener("click", function(event){
+                document.cookie = button.dataset.cookieString;
+            }, false);
+        })();
+    </script>
+}

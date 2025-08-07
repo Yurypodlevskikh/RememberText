@@ -4,8 +4,16 @@
     padding-left: 0 !important;
     padding-right: 0 !important;
 }*/
+
+a:hover{
+    text-decoration: none;
+}
 /*---- Navigation END ----*/
 /*---- Old bootstrap START ----*/
+.table-responsive.table-bordered{
+    border: 0;
+}
+/*---- Old bootstrap END ----*/
 .has-success .help-block,
 .has-success .control-label,
 .has-success .radio,
@@ -119,8 +127,17 @@
 .custom-danger{
     background-color: #d9534f;
 }
+.deltag{
+    background: none;
+    border: 0;
+    border-radius: 7px;
+    color: #d2322d;
+    font-weight: bold;
+    padding: 0;
+    vertical-align: top;
+}
 /* Table */
-.table-nonfluid{
+.table-nonfluid {
     width: auto !important;
 }
 /* Modal header */

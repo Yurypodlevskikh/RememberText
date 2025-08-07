@@ -1,0 +1,33 @@
+﻿@model RememberText.ViewModels.SpaceProgressBarViewModel
+
+@if (Model != null)
+{
+    if (Model.Percent >= 0 && Model.Percent <= 100)
+    {
+        <div class="row">
+            <div class="col">
+                <span id="spaceAmount" class="badge badge-info">@Model.AmountOfText</span>
+                <string> of </string>
+                <span id="spaceLimitation" class="badge badge-info">@Model.LimitationOfChars</span>
+                <string> left </string>
+                <span id="spaceLeft" class="badge badge-info">@(Model.LimitationOfChars - Model.AmountOfText)</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="progress text-center">
+                    <div id="commonProgress" class="hidden-xs mt-2 position-absolute text-white" style="width:@(Model.Percent + "%")">
+                        <strong id="commonPercent" class="">@Model.Percent</strong><strong>%</strong>
+                    </div>
+                    <div id="percentSuccess" class="progress-bar bg-success" role="progressbar" aria-label="Segment success" style="width: @Model.SuccessPercent%"
+                        aria-valuenow="@Model.SuccessPercent" aria-valuemin="0" aria-valuemax="@Model.SuccessMax"></div>
+                    <div id="percentWarning" class="progress-bar bg-warning" role="progressbar" aria-label="Segment warning" style="width: @Model.WarningPercent%"
+                        aria-valuenow="@Model.WarningPercent" aria-valuemin="0" aria-valuemax="@Model.WarningMax"></div>
+                    <div id="percentDanger" class="progress-bar bg-danger" role="progressbar" aria-label="Segment danger" style="width: @Model.DangerPercent%"
+                        aria-valuenow="@Model.DangerPercent" aria-valuemin="0" aria-valuemax="@Model.DangerMax"></div>
+                </div>
+            </div>
+        </div>
+        <hr />
+    }
+}

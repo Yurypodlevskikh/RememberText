@@ -1,0 +1,11 @@
+﻿@model List<RememberText.Domain.Entities.TextCopyrightModel>
+
+@if (Model != null && Model.Count() > 0)
+{
+<ul class="list-unstyled mb-0">
+    @foreach (var item in Model)
+    {
+        <li class="copyright-suggests" data-copyrightid="@item.Id"><i class="fas fa-search-plus"></i>@item.CopyrightName</li>
+    }
+</ul>
+}

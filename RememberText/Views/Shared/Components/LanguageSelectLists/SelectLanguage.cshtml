@@ -1,0 +1,16 @@
+﻿@model SelectList
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
+
+<form asp-controller="Home" asp-action="SetLanguage" method="post" class="mr-2">
+    <div class="input-group input-group-sm">
+        <div id="LangSelectorListBtn" class="input-group-prepend">
+            <button class="btn btn-success" type="submit">@SharedLocalizer["Yes"]</button>
+        </div>
+        <select name="culture" onchange="this.form.submit();" asp-items="@Model" id="LangSelectorList" class="custom-select"></select>
+    </div>
+</form>
+
+<script>
+    document.getElementById("LangSelectorListBtn").hidden = true;
+</script>

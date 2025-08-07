@@ -1,0 +1,10 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
+
+<input type="checkbox" id="rt-nav-toggle" hidden /> 
+<label for="rt-nav-toggle" class="rt-nav-toggle bg-transparent"></label>
+<nav id="rt-sidebar-menu" class="rt-sidebar-menu d-md-block bg-light sidebar">
+    <div class="sidebar-sticky pt-0">
+        <vc:preferred-lang where-lang="SidebarUserLangTags"></vc:preferred-lang>
+    </div>
+</nav>

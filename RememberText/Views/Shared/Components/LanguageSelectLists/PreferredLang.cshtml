@@ -1,0 +1,12 @@
+﻿@model RememberText.ViewModels.ChckBxsViewModel
+
+@if (Model != null)
+{
+    foreach (var item in Model.Checks)
+    {
+        <div class="custom-control custom-checkbox custom-control-inline">
+            <input type="checkbox" name="@Model.FieldsName" class="custom-control-input" id="@(Model.FieldsName)_@(item.Value)" value="@item.Value">
+            <label class="custom-control-label" for="@(Model.FieldsName)_@(item.Value)">@item.Text</label>
+        </div>
+    }
+}

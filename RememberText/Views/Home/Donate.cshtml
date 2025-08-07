@@ -1,0 +1,48 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> Localizer
+
+@{
+    ViewData["Title"] = Localizer["Donate"].Value;
+}
+
+<script src="https://www.paypalobjects.com/donate/sdk/donate-sdk.js" charset="UTF-8"></script>
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@Localizer["Donate"].Value</h5>
+                <p class="card-text">@Localizer["DonateDescription"].Value</p>
+
+                @*<p class="card-text">
+                    We will publish the names of our donors, unless you specifically ask to remain anonymous.
+                </p>*@
+
+                <div id="paypal-donate-button-container"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    PayPal.Donation.Button({
+        env: 'sandbox',
+        hosted_button_id: 'BT6XW3499C23U',
+        //business: 'sb-dp20b14642756@personal.example.com',
+        image: {
+            src: 'https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif',
+            title: 'PayPal - The safer, easier way to pay online!',
+            alt: 'Donate with PayPal button'
+        },
+        onComplete: function (params) {
+            // Your onComplete handler
+        },
+    }).render('#paypal-donate-button-container');
+</script>
+@*
+<form action="https://www.sandbox.paypal.com/donate" method="post" target="_top">
+<input type="hidden" name="hosted_button_id" value="BT6XW3499C23U" />
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+<img alt="" border="0" src="https://www.sandbox.paypal.com/en_SE/i/scr/pixel.gif" width="1" height="1" />
+</form>*@
+

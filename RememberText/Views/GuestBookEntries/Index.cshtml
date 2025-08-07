@@ -1,0 +1,102 @@
+﻿@model RememberText.Infrastructure.Helpers.PaginatedList<RememberText.ViewModels.GuestBookDetailsViewModel>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> Localizer
+
+@{
+    ViewData["Title"] = Localizer["Messages"].Value;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4>@Localizer["Messages"].Value</h4>
+
+@if (Model != null && Model.Count() > 0)
+{
+    <table class="table table-sm table-bordered table-striped table-hover table-responsive" style="min-width:800px;">
+        <thead class="thead-light">
+            <tr>
+                <th class="text-center align-middle">№</th>
+                <th>
+                    @Localizer["Title"].Value
+                </th>
+                <th>
+                    @Localizer["Message"].Value
+                </th>
+                <th>
+                    @Localizer["Sender"].Value
+                </th>
+                <th>
+                    @Localizer["Created"].Value
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int i = 1;
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @i
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MessageTitle)
+                        </td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item.MessageId">
+                                @item.Message
+                            </a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SenderNickname)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedDateTime)
+                        </td>
+                        <td>
+                            <a asp-action="Delete" asp-route-id="@item.MessageId" class="text-danger">
+                                <i class="far fa-trash-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    i++;
+                }
+            }
+        </tbody>
+    </table>
+
+    string prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    string nextDisabled = !Model.HasNextPage ? "disabled" : "";
+
+    <nav aria-label="Message page navigation">
+        <ul class="pagination mb-0">
+            <li class="page-item @prevDisabled">
+                <a asp-controller="GuestBookEntries" asp-route-PageNumber="@(Model.PageIndex - 1)" class="page-link @prevDisabled">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item @nextDisabled">
+                <a asp-controller="GuestBookEntries" asp-route-PageNumber="@(Model.PageIndex + 1)" class="page-link @nextDisabled">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            <li class="page-item overflow-auto">
+                <ul class="pagination">
+                    @for (int y = 1; y <= Model.TotalPages; y++)
+                    {
+                        <li class="page-item@(Model.PageIndex == y ? " active" : "")">
+                            <a asp-controller="GuestBookEntries" asp-route-PageNumber="@y" class="page-link">
+                                @y
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </li>
+        </ul>
+    </nav>
+}
+else
+{
+    <h5>@Localizer["NoMessages"].Value</h5>
+}
+

@@ -1,0 +1,48 @@
+﻿@model RememberText.ViewModels.TopicsAndParamViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    string prevDisabled = !Model.Topics.PLTopics.HasPreviousPage ? "disabled" : "";
+    string nextDisabled = !Model.Topics.PLTopics.HasNextPage ? "disabled" : "";
+}
+
+<nav aria-label="Topic page navigation">
+    <ul class="pagination mb-0">
+        <li class="page-item @prevDisabled">
+            <a asp-controller="Home" asp-action="Index"
+               asp-route-ViewMode="@Model.Topics.ViewMode" asp-route-SortOrder="@Model.Topics.SortOrder"
+               asp-route-PageNumber="@(string.IsNullOrEmpty(prevDisabled) ? Model.Topics.PageNumber - 1 : Model.Topics.PageNumber)" 
+               asp-route-TagParam="@Model.Topics.TagParam" asp-route-SearchTitle="@Model.Topics.SearchTitle"
+               class="page-link" title="@Model.Topics.SearchTitle" data-toggle="tooltip">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li class="page-item @nextDisabled">
+            <a asp-controller="Home" asp-action="Index"
+               asp-route-ViewMode="@Model.Topics.ViewMode" asp-route-SortOrder="@Model.Topics.SortOrder"
+               asp-route-PageNumber="@(string.IsNullOrEmpty(nextDisabled) ? Model.Topics.PageNumber + 1 : Model.Topics.PageNumber)" 
+               asp-route-TagParam="@Model.Topics.TagParam" asp-route-SearchTitle="@Model.Topics.SearchTitle"
+               class="page-link" title="@Model.Topics.SearchTitle" data-toggle="tooltip">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        <li class="page-item overflow-auto">
+            <ul class="pagination">
+                @for (int y = 1; y <= Model.Topics.PLTopics.TotalPages; y++)
+                {
+                    <li class="page-item@(Model.Topics.PLTopics.PageIndex == y ? " active" : "")">
+                        <a asp-controller="Home" asp-action="Index"
+                           asp-route-ViewMode="@Model.Topics.ViewMode" asp-route-SortOrder="@Model.Topics.SortOrder" asp-route-PageNumber="@y" 
+                           asp-route-TagParam="@Model.Topics.TagParam" asp-route-SearchTitle="@Model.Topics.SearchTitle"
+                           class="page-link">
+                            @y
+                        </a>
+                    </li>
+                }
+            </ul>
+        </li>
+
+
+    </ul>
+</nav> 

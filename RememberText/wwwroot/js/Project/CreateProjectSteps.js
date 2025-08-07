@@ -22,7 +22,7 @@ createProjectArea.onclick = function (event) {
                     createProjectArea.innerHTML = html;
                     spinner.style.display = "none";
                 })
-                .catch(error => console.log("Create Project: Wrong request!"));
+                .catch(error => console.error("Create Project: Wrong request!"));
                 //.catch(error => console.log("Error: " + error));
         } else {
             window.location = url;

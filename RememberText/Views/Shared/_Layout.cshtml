@@ -8,11 +8,24 @@
     @await RenderSectionAsync("head", required: false) 
 </head>
 <body>
-    <a id="RT_Brand" href="@Url.Action("Index", "Home")" class="navbar-brand">
-        <span id="Logo_box" class="custom-success">
-            <span id="logo-letter" class="rt-logo-letter">R</span>
+    <a id="RT_Brand" href="/" class="navbar-brand">
+        <span id="logo_box" class="custom-success">
+            <span id="logo_character" class="rt-logo-character">R</span>
         </span>
     </a>
+
+    @{
+        string alertClass = TempData["WrongResponse"] != null ? "alert-danger" : TempData["SuccessResponse"] != null ? "alert-success" : "";
+        string alertText = TempData["WrongResponse"] != null ? TempData["WrongResponse"].ToString() : TempData["SuccessResponse"] != null ? TempData["SuccessResponse"].ToString() : "";
+    }
+
+    <partial name="Partial/_CookieConsentPartial" />
+
+    <div class="alert-box">
+        <div class="alert-movers @(string.IsNullOrEmpty(alertText) ? "" : "rt-show-hide-alert")">
+            <div id="alert_box" class="text-center alert alert-response @alertClass">@alertText</div>
+        </div>
+    </div>
 
     <nav id="RT_Nav" class="navbar fixed-top navbar-expand-sm navbar-light">
         <div class="container">
@@ -27,25 +40,18 @@
             </div>
         </div>
 
-        <div id="Green_Line" class="line-success"></div>
+        <div id="logo_line" class="line-success"></div>
     </nav>
+    
+    @await RenderSectionAsync("SidebarMenu", required: false) 
 
     <div id="container-content" class="container">
 
-        @{
-            string alertClass = TempData["WrongResponse"] != null ? "alert alert-danger alert-response" : TempData["SuccessResponse"] != null ? "alert alert-success alert-response" : "";
-            string alertText = TempData["WrongResponse"] != null ? TempData["WrongResponse"].ToString() : TempData["SuccessResponse"] != null ? TempData["SuccessResponse"].ToString() : "";
-        }
-
-        <div class="alert-box">
-            <div>
-                <div class="text-center @alertClass">@alertText</div>
-            </div>
-        </div>
-
-        @*Her should will be additional code from old version*@
+        <partial name="Partial/_SpaceProgressBar" />
 
         @RenderBody()
+
+        <partial name="Partial/_DisplayTextModal" />
 
         <partial name="Partial/_Footer" />
 
@@ -54,5 +60,6 @@
     <partial name="Partial/_MainScripts" />
 
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

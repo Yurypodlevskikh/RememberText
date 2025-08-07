@@ -1,0 +1,47 @@
+﻿@model List<RememberText.ViewModels.SourceTargetSentence>
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
+
+@if (Model != null && Model.Count > 0)
+{
+    <span class="spanTableWrapper">
+        <span class="spanTableWithoutBorder">
+            @{
+                int sentCount = Model.Count();
+                for (int i = 0; i < sentCount; i++)
+                {
+                    <span class="spanRow @((i % 2 == 0) ? "divEvenColor" : "")">
+                        <span class="spanColWithoutBorder vAlignTop">
+                            <span class="badge badge-success">@(i + 1)</span>
+                        </span>
+                        <span class="spanColWithoutBorder">
+                            @if (!Model.ElementAt(i).Breaking)
+                            {
+                                string sentence = String.Format("{0} ", Model.ElementAt(i).Sentence);
+                                @sentence;
+                            }
+                            else
+                            {
+                                if (i < sentCount - 1)
+                                {
+                                    @Model.ElementAt(i).Sentence.ToString();
+                                    @Html.Raw("</span>")
+                                    @Html.Raw("<span class='spanColWithoutBorder'>")
+                                }
+                                else
+                                {
+                                    @Model.ElementAt(i).Sentence.ToString();
+                                }
+                            }
+                        </span>
+                    </span>
+                }
+            }
+        </span>
+    </span>
+}
+else
+{
+    <h4>@SharedLocalizer["NoText"]</h4>
+}

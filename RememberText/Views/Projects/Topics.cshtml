@@ -1,0 +1,54 @@
+﻿@model RememberText.ViewModels.TopicFiltersViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> Localizer
+
+@{
+    ViewData["Title"] = Localizer["MyProjects"].Value;
+}
+
+@section SidebarMenu{
+    <partial name="Partial/_SidebarTagsUserMenu" />
+}
+
+<div class="d-flex flex-row mb-1">
+    <div class="pr-2">
+        <h4 class="">
+            <a asp-controller="Projects" asp-action="Topics" asp-route-viewMode="UserTopics">
+                <i class="fas fa-home"></i>
+            </a>
+            @ViewData["Title"]
+        </h4>
+    </div>
+    <div class="">
+        <form asp-action="Topics" method="get">
+            <div class="input-group input-group-sm">
+                <input type="text" name="SearchTitle" class="form-control" placeholder="@Localizer["FindByTitle"].Value" value="@Model.SearchTitle">
+                <div class="input-group-append">
+                    <button class="btn btn-sm btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="mb-2">
+    <partial name="_CreateProject" model="@Model" />
+</div>
+
+<div class="row">
+    <div class="col">
+        <vc:topics shown-for="@Model.ViewMode" sort-param="@Model.SortOrder" page-number="@Model.PageNumber" tag-param="@Model.TagParam" search-title="@Model.SearchTitle"></vc:topics>
+    </div>
+</div>
+
+@section Scripts{
+    <environment include="Development">
+        <script src="~/js/Project/DisplayProjectText.js" asp-append-version="true" type="module"></script>
+        <script src="~/js/HideSidebarMenu.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/Project/DisplayProjectText.min.js" asp-append-version="true" type="module"></script>
+        <script src="~/js/HideSidebarMenu.min.js" asp-append-version="true"></script>
+    </environment>
+}
+

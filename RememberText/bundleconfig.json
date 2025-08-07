@@ -4,7 +4,9 @@
     "inputFiles": [
       "wwwroot/css/main.css",
       "wwwroot/css/rt-animation.css",
-      "wwwroot/css/myBootstrap.css"
+      "wwwroot/css/myBootstrap.css",
+      "wwwroot/css/table.css",
+      "wwwroot/css/typography.css"
     ]
   },
   {
@@ -25,18 +27,94 @@
     },
     //Optionally generate .map file
     "sourceMap": true
+  },
+  {
+    "outputFileName": "wwwroot/js/Project/PracticeLinkAsync.min.js",
+    "inputFiles": [
+      "wwwroot/js/Project/PracticeLinkAsync.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": true
+  },
+  {
+    "outputFileName": "wwwroot/js/Project/DisplayProjectText.min.js",
+    "inputFiles": [
+      "wwwroot/js/Project/DisplayProjectText.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/Project/PracticeProject.min.js",
+    "inputFiles": [
+      "wwwroot/js/Project/PracticeProject.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/Project/CreateProjectSteps.min.js",
+    "inputFiles": [
+      "wwwroot/js/Project/CreateProjectSteps.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/Project/EditProject.min.js",
+    "inputFiles": [
+      "wwwroot/js/Project/EditProject.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/Project/TagOffer.min.js",
+    "inputFiles": [
+      "wwwroot/js/Project/TagOffer.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/HideSidebarMenu.min.js",
+    "inputFiles": [ "wwwroot/js/HideSidebarMenu.js" ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/Project/exportscripts.min.js",
+    "inputFiles": [
+      "wwwroot/js/Project/exportscripts.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/Project/EditProjectTitleCopyright.min.js",
+    "inputFiles": [
+      "wwwroot/js/Project/EditProjectTitleCopyright.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
   }
-  //{
-  //  "outputFileName": "wwwroot/js/site.min.js",
-  //  "inputFiles": [
-  //    "wwwroot/js/main.js"
-  //  ],
-  //  // Optionally specify minifixcation options
-  //  "minify": {
-  //    "enabled": true,
-  //    "renameLocals": true
-  //  },
-  //  //Optionally generate .map file
-  //  "sourceMap": true
-  //}
 ]

@@ -1,5 +1,6 @@
 ﻿using RememberText.Domain.Entities;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace RememberText.Infrastructure.Interfaces
@@ -8,13 +9,15 @@ namespace RememberText.Infrastructure.Interfaces
     {
         IEnumerable<IpAddress> GetIpAddresses();
         IpAddress GetIpAddressById(int id);
-        IpAddress GetIpAddressByIpAddress(string ip);
-        Task<IpAddress> GetIpAddressByIpAddressAsync(string ip);
+        IQueryable<IpAddress> GetIpAddressByIpAddress(string ip);
+        Task<List<IpAddress>> GetIpAddressByIpAddressAsync(string ip);
+        Task<List<IpAddress>> GetIpAddressesByUserId(string userId);
+        Task<IpAddress> GetIpAddressByIpAndUserIdAsync(string ip, string UserId);
         IpAddress CreateIpAddress(IpAddress IpAddress);
         Task<IpAddress> CreateIpAddressAsync(IpAddress IpAddress);
+        Task<bool> IpAddressExistsAsync(string ip);
         int CreateIpAddressSimple(IpAddress ipAddress);
-        void Edit(int id, IpAddress IpAddress);
-        bool Delete(int id);
-        void SaveChanges();
+        Task Edit(IpAddress ipAddress);
+        Task DeleteIpAdressesByUserId(string userId);
     }
 }
